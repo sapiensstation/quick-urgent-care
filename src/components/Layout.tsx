@@ -11,7 +11,7 @@ const NAV = [
   { to: "/services", label: "Services" },
   { to: "/locations", label: "Locations" },
   { to: "/providers", label: "Providers" },
-  { to: "/pricing", label: "Pricing" },
+  // { to: "/pricing", label: "Pricing" },
   { to: "/about", label: "About" },
 ];
 
@@ -234,16 +234,26 @@ const StickyBar = () => {
             <ClinicActionList onPick={() => setOpen(false)} />
           </div>
         )}
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-label="Choose a clinic"
-          className="w-full flex items-center justify-center gap-2 py-4 gradient-primary text-primary-foreground font-medium text-sm"
-        >
-          <CalendarPlus className="size-5" />
-          <span className="text-xs uppercase tracking-[0.1em]">{open ? "Close" : "Book a visit · Get directions"}</span>
-        </button>
+        <div className="flex">
+          <a
+            href="tel:4052857222"
+            aria-label="Call 405-285-7222"
+            className="flex-1 flex items-center justify-center gap-2 py-4 surface-lowest text-foreground font-medium text-sm border-r border-outline-variant/20"
+          >
+            <Phone className="size-4" />
+            <span className="text-xs uppercase tracking-[0.1em]">Call</span>
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label="Choose a clinic"
+            className="flex-[2] flex items-center justify-center gap-2 py-4 gradient-primary text-primary-foreground font-medium text-sm"
+          >
+            <CalendarPlus className="size-5" />
+            <span className="text-xs uppercase tracking-[0.1em]">{open ? "Close" : "Book · Directions"}</span>
+          </button>
+        </div>
       </div>
 
       {/* Desktop: floating card bottom-right */}

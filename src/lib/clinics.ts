@@ -28,7 +28,7 @@ export const CLINICS: Clinic[] = [
     geo: { lat: 35.3603, lng: -97.4775 },
     mapsUrl: "https://maps.google.com/?q=2212+N+Broadway+Ave,+Moore,+OK+73160",
     slug: "moore-ok",
-    bookUrl: "https://www.clockwisemd.com/visit/7996",
+    bookUrl: "https://www.clockwisemd.com/visit/6974",
   },
   {
     id: "okc",
@@ -43,7 +43,7 @@ export const CLINICS: Clinic[] = [
     geo: { lat: 35.5829, lng: -97.5249 },
     mapsUrl: "https://maps.google.com/?q=1421+NW+122nd+St,+Oklahoma+City,+OK+73114",
     slug: "oklahoma-city-ok",
-    bookUrl: "https://www.clockwisemd.com/visit/6974",
+    bookUrl: "https://www.clockwisemd.com/visit/7996",
   },
 ];
 

@@ -86,10 +86,10 @@ const Index = () => {
               Walk in &<br />
               <span className="italic font-light">Urgent Care</span> Clinic.
             </h1>
-            <p className="mt-8 text-lg lg:text-xl text-on-surface-variant max-w-xl leading-relaxed">
+            {/* <p className="mt-8 text-lg lg:text-xl text-on-surface-variant max-w-xl leading-relaxed">
               A calmer kind of urgent care in Moore and Oklahoma City. Led by Dr. James Le, DO,
               Iftikhar Sandhu, PA-C, and a board-certified team — with on-site imaging and transparent pricing.
-            </p>
+            </p> */}
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button asChild variant="hero" size="xl">
                 <Link href="/book">Book a visit <ArrowUpRight className="size-4" /></Link>
@@ -186,7 +186,7 @@ const Index = () => {
       </section>
 
       {/* PRICING LEDGER: radical transparency */}
-      <section className="surface-low">
+      {/* <section className="surface-low">
         <div className="container py-24 lg:py-32 grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-5">
             <Eyebrow tone="primary">Pricing transparency ledger</Eyebrow>
@@ -221,7 +221,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ER vs URGENT CARE */}
       <section className="container py-24 lg:py-32">
