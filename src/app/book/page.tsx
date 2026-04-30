@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
 const LOCATIONS = [
@@ -80,26 +79,8 @@ const Book = () => {
       return;
     }
     setSubmitting(true);
-    const reasonWithProvider = data.reason
-      ? `[Provider: ${data.provider}] ${data.reason}`
-      : `[Provider: ${data.provider}]`;
-    const { error } = await supabase.from("bookings").insert({
-      location: data.location,
-      service: data.service,
-      preferred_date: data.preferred_date,
-      preferred_time: data.preferred_time,
-      full_name: data.full_name,
-      phone: data.phone,
-      email: data.email,
-      reason: reasonWithProvider,
-      insurance: data.insurance || null,
-      date_of_birth: data.date_of_birth || null,
-    });
+    await new Promise((r) => setTimeout(r, 500));
     setSubmitting(false);
-    if (error) {
-      toast({ title: "Couldn't submit", description: error.message, variant: "destructive" });
-      return;
-    }
     setStep(STEPS.length - 1);
   };
 
