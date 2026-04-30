@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Phone, MapPin, CalendarPlus, Navigation } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { CLINICS } from "@/lib/clinics";
 
 const NAV = [
   { to: "/services", label: "Services" },
@@ -24,7 +25,7 @@ export const Nav = () => {
       <div className="hidden md:block bg-tertiary text-tertiary-foreground text-[11px] tracking-[0.12em] uppercase font-medium">
         <div className="container flex items-center justify-between h-9">
           <div className="flex items-center gap-6">
-            <span className="flex items-center gap-2 opacity-90"><MapPin className="size-3" /> Moore · Norman · OKC</span>
+            <span className="flex items-center gap-2 opacity-90"><MapPin className="size-3" /> Moore · Oklahoma City</span>
             <span className="opacity-75">Open daily 7am – 8pm</span>
           </div>
           <a href="tel:4052857222" className="flex items-center gap-2 hover:opacity-100 opacity-90 transition-opacity">
@@ -113,7 +114,7 @@ export const Footer = () => (
           <div className="font-display font-semibold text-lg">Quick Urgent Care</div>
         </div>
         <p className="mt-6 text-on-surface-variant max-w-md leading-relaxed">
-          A walk-in urgent care clinic conveniently located off I-35 to serve Moore  and OKC. We opened in April 2017 and provide
+          Walk-in urgent care clinics serving Moore and Oklahoma City. We opened in April 2017 and provide
           state-of-the-art facilities with board-certified providers.
         </p>
         <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-container text-secondary-on-container text-xs font-medium">
@@ -137,7 +138,8 @@ export const Footer = () => (
       <div className="lg:col-span-4">
         <div className="label-eyebrow mb-5">Contact</div>
         <ul className="space-y-3 text-sm">
-          <li className="text-on-surface-variant">2212 N Broadway St, Moore, OK 73160</li>
+          <li className="text-on-surface-variant">2212 N Broadway Ave, Moore, OK 73160</li>
+          <li className="text-on-surface-variant">1421 NW 122nd St, Oklahoma City, OK 73114</li>
           <li><a className="hover:text-primary" href="tel:4052857222">405-285-7222</a></li>
           <li className="text-on-surface-variant">Fax 405-285-7227</li>
         </ul>
@@ -162,18 +164,11 @@ export const Footer = () => (
   </footer>
 );
 
-const CLINIC_DIRECTIONS = [
-  {
-    city: "Moore",
-    addr: "2212 N Broadway St, Moore, OK 73160",
-    url: "https://maps.google.com/?q=2212+N+Broadway+St,+Moore,+OK+73160",
-  },
-  {
-    city: "Oklahoma City",
-    addr: "Off I-35, Oklahoma City, OK",
-    url: "https://maps.google.com/?q=Quick+Urgent+Care+Oklahoma+City+OK",
-  },
-];
+const CLINIC_DIRECTIONS = CLINICS.map((c) => ({
+  city: c.city,
+  addr: c.fullAddress,
+  url: c.mapsUrl,
+}));
 
 const DirectionsList = ({ onPick }: { onPick?: () => void }) => (
   <ul className="py-2">

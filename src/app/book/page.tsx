@@ -13,8 +13,8 @@ import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
 
 const LOCATIONS = [
-  { id: "moore", name: "Moore", addr: "2212 N Broadway St", wait: 12 },
-  { id: "okc", name: "Oklahoma City", addr: "Off I-35", wait: 18 },
+  { id: "moore", name: "Moore", addr: "2212 N Broadway Ave", wait: 12 },
+  { id: "okc", name: "Oklahoma City", addr: "1421 NW 122nd St", wait: 18 },
 ];
 
 const SERVICES = [

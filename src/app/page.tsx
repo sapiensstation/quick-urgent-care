@@ -87,8 +87,9 @@ const Index = () => {
               <span className="italic font-light">Urgent Care</span> Clinic.
             </h1>
             <p className="mt-8 text-lg lg:text-xl text-on-surface-variant max-w-xl leading-relaxed">
-              A calmer kind of urgent care. Board-certified providers, on-site imaging, and
-              transparent pricing, across Moore, and Oklahoma City.
+              A calmer kind of urgent care in Moore and Oklahoma City. Led by Dr. Mudassir Nawaz, MD,
+              Dr. James Le, DO, Iftikhar Sandhu, PA-C, and a board-certified team — with on-site
+              imaging and transparent pricing.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button asChild variant="hero" size="xl">
@@ -105,8 +106,8 @@ const Index = () => {
               </span>
             </label> */}
             <div className="mt-10 flex flex-wrap gap-2">
-              <GeoChip city="Moore, OK" distance="2212 N Broadway" />
-              <GeoChip city="Oklahoma City" distance="off I-35" />
+              <GeoChip city="Moore, OK" distance="2212 N Broadway Ave" />
+              <GeoChip city="Oklahoma City" distance="1421 NW 122nd St" />
             </div>
           </div>
 
@@ -264,13 +265,13 @@ const Index = () => {
         <SectionHeader
           eyebrow="Find your clinic"
           title={<>Two clinics.<br />Same standard of care.</>}
-          description="Conveniently located off I-35 to serve Moore and OKC. Walk in any day from 7am to 8pm, or reserve a time online."
+          description="Walk-in care in Moore and Oklahoma City. Walk in any day from 7am to 8pm, or reserve a time online."
         />
 
         <div className="mt-16 grid lg:grid-cols-2 gap-6">
           {[
-            { img: clinicMoore, city: "Moore, OK", addr: "2212 N Broadway St, Moore, OK 73160", phone: "405-285-7222", wait: 12 },
-            { img: clinicOkc, city: "Oklahoma City, OK", addr: "Off I-35, Oklahoma City, OK", phone: "405-285-7222", wait: 18 },
+            { img: clinicMoore, city: "Moore, OK", addr: "2212 N Broadway Ave, Moore, OK 73160", phone: "405-285-7222", wait: 12 },
+            { img: clinicOkc, city: "Oklahoma City, OK", addr: "1421 NW 122nd St, Oklahoma City, OK 73114", phone: "405-285-7222", wait: 18 },
           ].map((loc) => (
             <article key={loc.city} className="surface-lowest rounded-xl overflow-hidden hover:lift-soft transition-all group">
               <div className="aspect-[16/10] overflow-hidden">

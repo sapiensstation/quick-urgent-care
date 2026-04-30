@@ -1,36 +1,27 @@
 "use client";
 import { Layout } from "@/components/Layout";
-import { Eyebrow, SectionHeader } from "@/components/Editorial";
+import { Eyebrow } from "@/components/Editorial";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowUpRight, MapPin, Phone, Clock } from "lucide-react";
+import { CLINICS } from "@/lib/clinics";
 const clinicMoore = "/assets/clinic-moore.jpg";
 const clinicOkc = "/assets/clinic-okc.jpg";
 
-const LOCATIONS = [
-  {
-    img: clinicMoore,
-    city: "Moore",
-    state: "OK",
-    addr: "2212 N Broadway St",
-    zip: "Moore, OK 73160",
-    phone: "405-285-7222",
-    fax: "405-285-7227",
-    wait: 12,
-    note: "Flagship location, off I-35. On-site imaging available.",
-  },
-  {
-    img: clinicOkc,
-    city: "Oklahoma City",
-    state: "OK",
-    addr: "Conveniently located off I-35",
-    zip: "Oklahoma City, OK",
-    phone: "405-285-7222",
-    fax: "405-285-7224",
-    wait: 18,
-    note: "Serving south OKC and surrounding neighborhoods.",
-  },
-];
+const LOCATIONS = CLINICS.map((c) => ({
+  img: c.id === "moore" ? clinicMoore : clinicOkc,
+  city: c.city,
+  state: c.state,
+  addr: c.street,
+  zip: `${c.city}, ${c.state} ${c.zip}`,
+  phone: c.phone,
+  fax: c.fax,
+  wait: c.wait,
+  note:
+    c.id === "moore"
+      ? "Flagship clinic on N Broadway Ave. On-site digital X-ray and ultrasound."
+      : "Conveniently located on NW 122nd St. Serving north OKC and surrounding neighborhoods.",
+}));
 
 const Locations = () => (
   <Layout>
@@ -46,7 +37,7 @@ const Locations = () => (
       <div className="surface-lowest rounded-xl overflow-hidden lift-soft">
         <iframe
           title="Quick Urgent Care clinic locations"
-          src="https://maps.google.com/maps?q=Quick+Urgent+Care+Oklahoma&z=10&output=embed"
+          src="https://maps.google.com/maps?q=Quick+Urgent+Care+2212+N+Broadway+Ave+Moore+OK&z=10&output=embed"
           className="w-full h-[420px] border-0"
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
@@ -99,7 +90,7 @@ const Locations = () => (
       <div className="surface-low rounded-xl p-12 lg:p-16 grid md:grid-cols-3 gap-8 text-center md:text-left">
         {[
           { icon: Clock, title: "Open daily", desc: "7am to 8pm, every single day — including holidays." },
-          { icon: MapPin, title: "Off I-35", desc: "Both locations are minutes from the interstate." },
+          { icon: MapPin, title: "Two locations", desc: "Moore and Oklahoma City — both with on-site imaging." },
           { icon: Phone, title: "Call ahead", desc: "Our team will tell you exactly what to expect." },
         ].map(({ icon: Icon, title, desc }) => (
           <div key={title} className="flex flex-col items-center md:items-start gap-3">
