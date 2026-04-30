@@ -1,27 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* =============================================================
+   Quick Urgent Care
+   All colors HSL. Tonal layering. No 1px borders.
+   ============================================================= */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Surface foundation */
+    --background: 320 20% 98.5%;          /* #fcf8fb — surface */
+    --foreground: 240 4% 11%;             /* #1b1b1d — on_surface */
+
+    --surface: 320 20% 98.5%;
+    --surface-dim: 320 12% 94%;
+    --surface-bright: 0 0% 100%;
+    --surface-container-lowest: 0 0% 100%;
+    --surface-container-low: 320 14% 96.5%;
+    --surface-container: 320 10% 94%;
+    --surface-container-high: 320 8% 91%;
+    --surface-container-highest: 320 6% 88%;
+
+    --on-surface: 240 4% 11%;
+    --on-surface-variant: 240 4% 32%;
+    --on-surface-muted: 240 4% 48%;
+
+    /* Brand: deep authoritative red */
+    --primary: 354 100% 28%;              /* #8f000d */
+    --primary-foreground: 0 0% 100%;
+    --primary-container: 0 60% 42%;       /* #b22222 */
+    --on-primary-container: 0 0% 100%;
+    --primary-fixed: 354 60% 70%;
+
+    /* Calming teal — secondary */
+    --secondary: 171 70% 24%;             /* #136a5b */
+    --secondary-foreground: 0 0% 100%;
+    --secondary-container: 171 30% 88%;
+    --on-secondary-container: 171 70% 18%;
+
+    /* Deep slate-blue — tertiary */
+    --tertiary: 191 100% 18%;             /* #004c5a */
+    --tertiary-foreground: 0 0% 100%;
+    --tertiary-container: 191 35% 88%;
+    --on-tertiary-container: 191 100% 14%;
+
+    /* States */
+    --destructive: 354 100% 28%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 171 70% 24%;
+    --warning: 32 95% 44%;
+
+    /* Outline (use at low opacity only) */
+    --outline: 240 6% 60%;
+    --outline-variant: 240 6% 78%;
+
+    /* shadcn aliases mapped to surface system */
+    --card: 0 0% 100%;
+    --card-foreground: 240 4% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 4% 11%;
+    --muted: 320 14% 96.5%;
+    --muted-foreground: 240 4% 42%;
+    --accent: 320 14% 96.5%;
+    --accent-foreground: 240 4% 11%;
+    --border: 240 6% 78%;                 /* used at low opacity */
+    --input: 320 14% 96.5%;
+    --ring: 354 100% 28%;
+
+    --radius: 0.75rem;
+    --radius-xl: 1.5rem;
+
+    /* Gradients — Signature textures */
+    --gradient-primary: linear-gradient(135deg, hsl(354 100% 28%) 0%, hsl(0 60% 42%) 100%);
+    --gradient-tertiary: linear-gradient(135deg, hsl(191 100% 18%) 0%, hsl(171 70% 24%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(320 20% 98.5%) 0%, hsl(320 14% 96.5%) 100%);
+    --gradient-editorial: radial-gradient(ellipse at top right, hsl(354 100% 28% / 0.08), transparent 60%),
+                          radial-gradient(ellipse at bottom left, hsl(171 70% 24% / 0.06), transparent 50%);
+
+    /* Ambient shadows — soft glow, not smudge */
+    --shadow-ambient: 0 32px 64px -16px hsl(354 100% 28% / 0.08);
+    --shadow-soft: 0 8px 24px -8px hsl(240 4% 11% / 0.06);
+    --shadow-glass: 0 8px 32px hsl(240 4% 11% / 0.06);
+    --shadow-press: 0 2px 8px hsl(354 100% 28% / 0.12);
+
+    /* Glass */
+    --glass-bg: hsl(0 0% 100% / 0.72);
+    --glass-border: hsl(240 6% 78% / 0.18);
+    --backdrop-blur: blur(20px) saturate(140%);
+
+    /* Motion */
+    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-base: 240ms var(--ease-editorial);
+
+    --sidebar-background: 320 14% 96.5%;
+    --sidebar-foreground: 240 4% 11%;
+    --sidebar-primary: 354 100% 28%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 320 10% 94%;
+    --sidebar-accent-foreground: 240 4% 11%;
+    --sidebar-border: 240 6% 78%;
+    --sidebar-ring: 354 100% 28%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: hsl(var(--outline-variant) / 0.15);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
+    color: hsl(var(--primary));
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@layer components {
+  .font-display { font-family: 'Manrope', sans-serif; letter-spacing: -0.025em; }
+  .font-body { font-family: 'Inter', sans-serif; }
+
+  .label-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: hsl(var(--on-surface-variant));
+  }
+
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    -webkit-backdrop-filter: var(--backdrop-blur);
+    border-bottom: 1px solid hsl(var(--outline-variant) / 0.12);
+  }
+
+  .surface-low { background-color: hsl(var(--surface-container-low)); }
+  .surface-base { background-color: hsl(var(--surface-container)); }
+  .surface-lowest { background-color: hsl(var(--surface-container-lowest)); }
+  .surface-high { background-color: hsl(var(--surface-container-high)); }
+
+  .gradient-primary { background-image: var(--gradient-primary); }
+  .gradient-tertiary { background-image: var(--gradient-tertiary); }
+  .gradient-editorial { background-image: var(--gradient-editorial); }
+
+  .ghost-border { box-shadow: inset 0 0 0 1px hsl(var(--outline-variant) / 0.18); }
+  .ghost-border-primary { box-shadow: inset 0 0 0 1px hsl(var(--primary) / 0.2); }
+
+  .lift-ambient { box-shadow: var(--shadow-ambient); }
+  .lift-soft { box-shadow: var(--shadow-soft); }
+
+  .pulse-dot::before {
+    content: '';
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: hsl(var(--secondary));
+    margin-right: 0.5rem;
+    box-shadow: 0 0 0 0 hsl(var(--secondary) / 0.6);
+    animation: pulse-ring 2s ease-out infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 hsl(var(--secondary) / 0.6); }
+    70% { box-shadow: 0 0 0 8px hsl(var(--secondary) / 0); }
+    100% { box-shadow: 0 0 0 0 hsl(var(--secondary) / 0); }
+  }
+
+  .reveal-up {
+    animation: reveal-up 0.9s var(--ease-editorial) both;
+  }
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .marquee-fade {
+    mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
   }
 }
