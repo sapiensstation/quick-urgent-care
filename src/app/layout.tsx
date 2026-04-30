@@ -76,6 +76,9 @@ const websiteJsonLd = {
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID;
+const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+const CALLRAIL_ACCOUNT = process.env.NEXT_PUBLIC_CALLRAIL_ACCOUNT;
+const CALLRAIL_SCRIPT = process.env.NEXT_PUBLIC_CALLRAIL_SCRIPT;
 
 export default function RootLayout({
   children,
@@ -98,13 +101,20 @@ export default function RootLayout({
             {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
           </Script>
         )}
-        {GA4_ID && (
+        {(GA4_ID || ADS_ID) && (
           <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`} strategy="afterInteractive" />
-            <Script id="ga4" strategy="afterInteractive">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA4_ID}');`}
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID || ADS_ID}`} strategy="afterInteractive" />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${GA4_ID ? `gtag('config','${GA4_ID}');` : ""}${ADS_ID ? `gtag('config','${ADS_ID}');` : ""}`}
             </Script>
           </>
+        )}
+        {CALLRAIL_ACCOUNT && CALLRAIL_SCRIPT && (
+          <Script
+            id="callrail"
+            strategy="afterInteractive"
+            src={`//cdn.callrail.com/companies/${CALLRAIL_ACCOUNT}/${CALLRAIL_SCRIPT}/12/swap.js`}
+          />
         )}
       </head>
       <body className="antialiased">

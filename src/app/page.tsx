@@ -87,9 +87,8 @@ const Index = () => {
               <span className="italic font-light">Urgent Care</span> Clinic.
             </h1>
             <p className="mt-8 text-lg lg:text-xl text-on-surface-variant max-w-xl leading-relaxed">
-              A calmer kind of urgent care in Moore and Oklahoma City. Led by Dr. Mudassir Nawaz, MD,
-              Dr. James Le, DO, Iftikhar Sandhu, PA-C, and a board-certified team — with on-site
-              imaging and transparent pricing.
+              A calmer kind of urgent care in Moore and Oklahoma City. Led by Dr. James Le, DO,
+              Iftikhar Sandhu, PA-C, and a board-certified team — with on-site imaging and transparent pricing.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button asChild variant="hero" size="xl">
@@ -343,6 +342,85 @@ const Index = () => {
             </span>
           ))}
         </div>
+      </section>
+
+      {/* INSURANCE ACCEPTED */}
+      <section className="surface-low">
+        <div className="container py-20 lg:py-24">
+          <SectionHeader
+            eyebrow="Insurance"
+            title={<>Most major plans accepted.</>}
+            description="If you don't see your plan, call us — we'll verify your coverage in minutes. Self-pay rates posted on every visit."
+          />
+          <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {[
+              "Blue Cross Blue Shield",
+              "Aetna",
+              "UnitedHealthcare",
+              "Cigna",
+              "Humana",
+              "Medicare",
+              "Medicaid (SoonerCare)",
+              "Tricare",
+              "Healthchoice",
+              "Community Care",
+              "GEHA",
+              "Self-pay",
+            ].map((p) => (
+              <div key={p} className="surface-lowest rounded-lg px-4 py-4 text-center text-sm font-medium">
+                {p}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="container py-24 lg:py-32">
+        <SectionHeader
+          eyebrow="FAQ"
+          title="Common questions, answered."
+          description="The basics you'd want to know before walking in."
+        />
+        <div className="mt-12 grid lg:grid-cols-2 gap-3">
+          {[
+            { q: "Do I need an appointment?", a: "No. Walk in any day 7am–8pm. Reserving online is faster — most online bookings are confirmed by text within minutes." },
+            { q: "What insurance do you accept?", a: "Most major commercial plans, Medicare, Medicaid (SoonerCare), Tricare, and self-pay. Call to verify your specific plan." },
+            { q: "Are you open on holidays?", a: "Yes. Open every single day, 7am–8pm — including holidays." },
+            { q: "How fast is the wait?", a: "Average door-to-doctor is around 15 minutes. Live wait times shown on the homepage." },
+            { q: "Do you treat children?", a: "Yes. We see kids 6 months and up in a pediatric-friendly setting." },
+            { q: "Can I get an X-ray same visit?", a: "Yes. We have on-site digital X-ray and ultrasound, read by our providers in real time." },
+          ].map((f) => (
+            <details key={f.q} className="group surface-lowest rounded-xl p-6">
+              <summary className="cursor-pointer list-none flex items-center justify-between gap-4 font-medium">
+                {f.q}
+                <span className="text-primary group-open:rotate-45 transition-transform text-xl">+</span>
+              </summary>
+              <p className="mt-3 text-on-surface-variant text-sm leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                { q: "Do I need an appointment?", a: "No. Walk in any day 7am–8pm. Reserving online is faster — most online bookings are confirmed by text within minutes." },
+                { q: "What insurance do you accept?", a: "Most major commercial plans, Medicare, Medicaid (SoonerCare), Tricare, and self-pay. Call to verify your specific plan." },
+                { q: "Are you open on holidays?", a: "Yes. Open every single day, 7am–8pm — including holidays." },
+                { q: "How fast is the wait?", a: "Average door-to-doctor is around 15 minutes. Live wait times shown on the homepage." },
+                { q: "Do you treat children?", a: "Yes. We see kids 6 months and up in a pediatric-friendly setting." },
+                { q: "Can I get an X-ray same visit?", a: "Yes. We have on-site digital X-ray and ultrasound, read by our providers in real time." },
+              ].map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }),
+          }}
+        />
       </section>
 
       {/* TESTIMONIALS CAROUSEL */}

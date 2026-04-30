@@ -164,29 +164,37 @@ export const Footer = () => (
   </footer>
 );
 
-const CLINIC_DIRECTIONS = CLINICS.map((c) => ({
-  city: c.city,
-  addr: c.fullAddress,
-  url: c.mapsUrl,
-}));
-
-const DirectionsList = ({ onPick }: { onPick?: () => void }) => (
+const ClinicActionList = ({ onPick }: { onPick?: () => void }) => (
   <ul className="py-2">
-    {CLINIC_DIRECTIONS.map((c) => (
-      <li key={c.city}>
-        <a
-          href={c.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={onPick}
-          className="flex items-start gap-3 px-4 py-3 hover:bg-surface-low transition-colors"
-        >
+    {CLINICS.map((c) => (
+      <li key={c.id} className="px-4 py-3 hover:bg-surface-low transition-colors">
+        <div className="flex items-start gap-3">
           <MapPin className="size-4 text-primary mt-0.5 shrink-0" />
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="text-sm font-medium leading-tight">{c.city}</div>
-            <div className="text-xs text-on-surface-muted mt-0.5 truncate">{c.addr}</div>
+            <div className="text-xs text-on-surface-muted mt-0.5 truncate">{c.fullAddress}</div>
           </div>
-        </a>
+        </div>
+        <div className="mt-3 flex gap-2">
+          <a
+            href={c.bookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onPick}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 gradient-primary text-primary-foreground rounded-lg px-3 py-2 text-xs font-medium"
+          >
+            <CalendarPlus className="size-3.5" /> Book now
+          </a>
+          <a
+            href={c.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onPick}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 surface-low rounded-lg px-3 py-2 text-xs font-medium border border-outline-variant/20"
+          >
+            <Navigation className="size-3.5" /> Directions
+          </a>
+        </div>
       </li>
     ))}
   </ul>
@@ -223,32 +231,23 @@ const StickyBar = () => {
               <span>Choose a clinic</span>
               <button onClick={() => setOpen(false)} aria-label="Close"><X className="size-4" /></button>
             </div>
-            <DirectionsList onPick={() => setOpen(false)} />
+            <ClinicActionList onPick={() => setOpen(false)} />
           </div>
         )}
-        <div className="flex">
-          <Link
-            href="/book"
-            className="flex-1 flex flex-col items-center justify-center gap-1 py-3 gradient-primary text-primary-foreground font-medium text-sm"
-          >
-            <CalendarPlus className="size-5" />
-            <span className="text-xs uppercase tracking-[0.1em]">Book a visit</span>
-          </Link>
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-label="Get Directions"
-            className="flex-1 flex flex-col items-center justify-center gap-1 py-3 surface-lowest text-on-surface-variant text-sm font-medium border-l border-outline-variant/20"
-          >
-            <Navigation className="size-5" />
-            <span className="text-xs uppercase tracking-[0.1em]">Get Directions</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-label="Choose a clinic"
+          className="w-full flex items-center justify-center gap-2 py-4 gradient-primary text-primary-foreground font-medium text-sm"
+        >
+          <CalendarPlus className="size-5" />
+          <span className="text-xs uppercase tracking-[0.1em]">{open ? "Close" : "Book a visit · Get directions"}</span>
+        </button>
       </div>
 
       {/* Desktop: floating card bottom-right */}
-      <div className="hidden lg:block fixed bottom-6 right-6 z-40 surface-lowest rounded-xl lift-ambient p-5 w-72 border border-outline-variant/15">
+      <div className="hidden lg:block fixed bottom-6 right-6 z-40 surface-lowest rounded-xl lift-ambient p-5 w-80 border border-outline-variant/15">
         <div className="label-eyebrow text-on-surface-muted">Quick Urgent Care</div>
         <p className="mt-1 font-display font-semibold text-base leading-snug">Ready to book a visit?</p>
         <a
@@ -262,10 +261,7 @@ const StickyBar = () => {
           405-285-7222
         </a>
         <div className="mt-3 pt-3 border-t border-outline-variant/15">
-          <div className="px-1 text-[11px] uppercase tracking-[0.12em] text-on-surface-muted flex items-center gap-2">
-            <Navigation className="size-3" /> Get Directions
-          </div>
-          <DirectionsList />
+          <ClinicActionList />
         </div>
       </div>
     </div>

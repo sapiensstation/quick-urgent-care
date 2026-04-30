@@ -1,10 +1,11 @@
 "use client";
 import { Layout } from "@/components/Layout";
-import { Eyebrow } from "@/components/Editorial";
+import { Eyebrow, SectionHeader } from "@/components/Editorial";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
+/* Categorized pricing intentionally hidden — keep only ER vs urgent care comparison.
 const CATEGORIES = [
   {
     label: "Office visits",
@@ -40,74 +41,65 @@ const CATEGORIES = [
       { service: "Sports / school physical", price: "45", note: "Form completed at visit" },
       { service: "DOT physical", price: "85", note: "Certified medical examiner" },
       { service: "Pre-employment physical", price: "75", note: "Employer programs available" },
-      { service: "Drug screen (5-panel)", price: "55", note: "Chain-of-custody available" },
+      { service: "Drug screen (5-panel)", price: "55", note: "Employer programs available" },
     ],
   },
 ];
+*/
 
 const Pricing = () => (
   <Layout>
     <section className="container pt-20 lg:pt-28 pb-16 grid lg:grid-cols-12 gap-10 items-end">
       <div className="lg:col-span-8">
-        <Eyebrow tone="primary">Pricing transparency ledger</Eyebrow>
-        <h1 className="mt-5 text-display-xl font-display">What it costs.<br />Before you walk in.</h1>
+        <Eyebrow tone="primary">Pricing</Eyebrow>
+        <h1 className="mt-5 text-display-xl font-display">A fraction of the cost.<br />Often a fraction of the wait.</h1>
       </div>
       <p className="lg:col-span-4 text-on-surface-variant text-lg leading-relaxed">
-        Self-pay rates published openly. Most major insurance accepted: your visit may cost less.
+        For most non-life-threatening issues, urgent care delivers the same diagnosis and treatment without the emergency-room markup.
       </p>
     </section>
 
-    <section className="container pb-12 grid lg:grid-cols-3 gap-4">
-      {[
-        ["Most major insurance accepted", "Aetna, BCBS, Cigna, United, Tricare and more."],
-        ["No facility fees", "What you see is what you pay. No hidden charges."],
-        ["HSA & FSA accepted", "Use pre-tax dollars at the time of visit."],
-      ].map(([title, desc]) => (
-        <div key={title as string} className="surface-low rounded-xl p-6 flex items-start gap-3">
-          <div className="size-8 rounded-lg bg-secondary-container text-secondary grid place-items-center shrink-0">
-            <Check className="size-4" />
+    <section className="container py-12">
+      <SectionHeader
+        eyebrow="ER vs urgent care"
+        title={<>What an average visit costs.</>}
+        description="Average emergency room cost vs Quick Urgent Care self-pay. Source: Health Care Cost Institute."
+      />
+      <div className="mt-12 grid md:grid-cols-2 gap-6">
+        <article className="surface-lowest rounded-xl p-10 lg:p-12 border border-outline-variant/20">
+          <div className="label-eyebrow text-on-surface-muted">Average ER visit</div>
+          <div className="mt-6 flex items-baseline gap-2">
+            <span className="font-display text-display-lg font-semibold tracking-tight text-on-surface-variant">$2,200</span>
           </div>
-          <div>
-            <div className="font-medium">{title}</div>
-            <div className="text-sm text-on-surface-variant mt-1">{desc}</div>
+          <ul className="mt-8 space-y-3 text-sm text-on-surface-variant">
+            <li className="flex items-start gap-3"><span className="mt-1.5 size-1.5 rounded-full bg-on-surface-muted" /><span>Hours-long wait for non-critical issues</span></li>
+            <li className="flex items-start gap-3"><span className="mt-1.5 size-1.5 rounded-full bg-on-surface-muted" /><span>Facility fees billed separately from physician fees</span></li>
+            <li className="flex items-start gap-3"><span className="mt-1.5 size-1.5 rounded-full bg-on-surface-muted" /><span>Surprise out-of-network charges</span></li>
+          </ul>
+        </article>
+        <article className="rounded-xl gradient-primary text-primary-foreground p-10 lg:p-12 lift-soft">
+          <div className="label-eyebrow text-primary-foreground/70">Quick Urgent Care visit</div>
+          <div className="mt-6 flex items-baseline gap-2">
+            <span className="font-display text-display-lg font-semibold tracking-tight">$89</span>
+            <span className="text-primary-foreground/80 text-sm">self-pay, all-inclusive</span>
           </div>
-        </div>
-      ))}
+          <ul className="mt-8 space-y-3 text-sm">
+            <li className="flex items-start gap-3"><span className="mt-1.5 size-1.5 rounded-full bg-primary-foreground" /><span>~15 min average door-to-doctor</span></li>
+            <li className="flex items-start gap-3"><span className="mt-1.5 size-1.5 rounded-full bg-primary-foreground" /><span>One transparent price — imaging and labs billed at posted rates</span></li>
+            <li className="flex items-start gap-3"><span className="mt-1.5 size-1.5 rounded-full bg-primary-foreground" /><span>Most major insurance accepted</span></li>
+          </ul>
+          <p className="mt-8 text-xs text-primary-foreground/70">
+            Life-threatening symptoms (chest pain, stroke signs, severe bleeding) — call 911 or go to the nearest ER.
+          </p>
+        </article>
+      </div>
     </section>
-
-    {CATEGORIES.map((cat, i) => (
-      <section key={cat.label} className={i % 2 ? "surface-low" : ""}>
-        <div className="container py-16 grid lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-4">
-            <Eyebrow>{`Category 0${i + 1}`}</Eyebrow>
-            <h2 className="mt-4 text-display-md font-display">{cat.label}</h2>
-          </div>
-          <div className="lg:col-span-8">
-            <div className="surface-lowest rounded-xl p-2">
-              {cat.items.map((row, j) => (
-                <div
-                  key={row.service}
-                  className={`px-6 py-5 flex items-center justify-between gap-6 ${j !== cat.items.length - 1 ? "" : ""}`}
-                  style={{ marginBottom: j !== cat.items.length - 1 ? 4 : 0 }}
-                >
-                  <div className="flex-1">
-                    <div className="font-medium">{row.service}</div>
-                    <div className="text-xs text-on-surface-muted mt-1">{row.note}</div>
-                  </div>
-                  <div className="font-display text-2xl font-semibold tracking-tight">${row.price}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-    ))}
 
     <section className="container py-24">
       <div className="rounded-xl gradient-primary text-primary-foreground p-12 lg:p-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lift-ambient">
         <div>
           <h2 className="font-display text-display-md">Questions about cost?</h2>
-          <p className="mt-3 text-primary-foreground/80 max-w-xl">Call us before your visit and we'll give you an honest estimate based on your insurance.</p>
+          <p className="mt-3 text-primary-foreground/80 max-w-xl">Call us before your visit and we will give you an honest estimate based on your insurance.</p>
         </div>
         <div className="flex gap-3">
           <Button asChild variant="glass" size="lg"><a href="tel:4052857222">Call 405-285-7222</a></Button>

@@ -25,15 +25,6 @@ const PROVIDERS: Provider[] = [
     patientsServed: "6k+",
   },
   {
-    name: "Mudassir Nawaz",
-    credentials: "MD",
-    title: "Medical Doctor",
-    description: "Board-certified physician with over 15 years of emergency medicine experience.",
-    image: "https://quickurgentcareok.com/wp-content/uploads/2022/04/Untitled.png",
-    yearsExperience: 15,
-    patientsServed: "20k+",
-  },
-  {
     name: "James Le",
     credentials: "DO",
     title: "Doctor of Osteopathic Medicine",
