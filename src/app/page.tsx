@@ -246,7 +246,7 @@ const Index = () => {
           <article className="rounded-xl gradient-primary text-primary-foreground p-10 lg:p-12 lift-soft">
             <div className="label-eyebrow text-primary-foreground/70">Quick Urgent Care visit</div>
             <div className="mt-6 flex items-baseline gap-2">
-              <span className="font-display text-display-lg font-semibold tracking-tight">$129</span>
+              <span className="font-display text-display-lg font-semibold tracking-tight">$89</span>
               <span className="text-primary-foreground/80 text-sm">self-pay, all-inclusive</span>
             </div>
             <ul className="mt-8 space-y-3 text-sm">
