@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, FileText, Shield, Lock, Mail } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, FileText, Shield, Lock, Mail, Plus } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -21,11 +21,14 @@ const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 
 const STEPS = ["Account", "Invoice", "Payment", "Done"] as const;
 
+const today = new Date().toISOString().split("T")[0];
+
 const MOCK_INVOICES = [
-  { id: "INV-20432", date: "2025-03-18", service: "Office visit · Moore", amount: 85.0, status: "Due" },
-  { id: "INV-20310", date: "2025-02-02", service: "Lab work · Moore", amount: 42.5, status: "Due" },
-  { id: "INV-20189", date: "2024-12-11", service: "COVID test · OKC", amount: 35.0, status: "Due" },
+  { id: "INV-20432", date: today, service: "Office visit · Moore", amount: 89.0, status: "Due" },
+  { id: "INV-20310", date: today, service: "Office visit · OKC", amount: 89.0, status: "Due" },
 ];
+
+type Invoice = { id: string; date: string; service: string; amount: number; status: string };
 
 const accountSchema = z.object({
   identifier: z.string().trim().min(5, "Enter phone or account number").max(40),
@@ -36,7 +39,7 @@ const accountSchema = z.object({
 
 interface CheckoutFormProps {
   total: number;
-  selectedInvoices: typeof MOCK_INVOICES;
+  selectedInvoices: Invoice[];
   email: string;
   name: string;
   onSuccess: (last4: string, paymentIntentId: string) => void;
@@ -73,7 +76,6 @@ function CheckoutForm({ total, selectedInvoices, email, name, onSuccess }: Check
     }
 
     if (paymentIntent?.status === "succeeded") {
-      // Send custom receipt
       fetch("/api/send-receipt", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -118,13 +120,34 @@ const Pay = () => {
   const [last4, setLast4] = useState("••••");
   const [loadingIntent, setLoadingIntent] = useState(false);
 
-  const selectedInvoices = MOCK_INVOICES.filter((i) => selected.includes(i.id));
+  const [customId] = useState(
+    () => `INV-C${Math.floor(10000 + Math.random() * 90000)}`
+  );
+  const [custom, setCustom] = useState({ service: "", amount: "" });
+
+  const customFilled = custom.service.trim().length > 0 && parseFloat(custom.amount) > 0;
+  const customInvoice: Invoice = {
+    id: customId,
+    date: today,
+    service: custom.service.trim() || "Custom service",
+    amount: parseFloat(custom.amount) || 0,
+    status: "Due",
+  };
+
+  const allInvoices: Invoice[] = [
+    ...MOCK_INVOICES,
+    ...(customFilled ? [customInvoice] : []),
+  ];
+
+  const selectedInvoices = allInvoices.filter((i) => selected.includes(i.id));
   const total = selectedInvoices.reduce((s, i) => s + i.amount, 0);
 
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
-  const toggleInvoice = (id: string) =>
+  const toggleInvoice = (id: string) => {
+    if (id === customId && !customFilled) return;
     setSelected((s) => (s.includes(id) ? s.filter((x) => x !== id) : [...s, id]));
+  };
 
   const validateAccount = () => {
     const parsed = accountSchema.safeParse(account);
@@ -163,7 +186,11 @@ const Pay = () => {
         const res = await fetch("/api/create-payment-intent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: total, invoices: selected, email: account.email }),
+          body: JSON.stringify({
+            amount: total,
+            invoices: selected,
+            email: account.email,
+          }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
@@ -273,7 +300,10 @@ const Pay = () => {
                         />
                       </div>
                       <div className="sm:col-span-2">
-                        <Label className="label-eyebrow">Email address * <span className="text-on-surface-muted normal-case font-normal">(receipt sent here)</span></Label>
+                        <Label className="label-eyebrow">
+                          Email address *{" "}
+                          <span className="text-on-surface-muted normal-case font-normal">(receipt sent here)</span>
+                        </Label>
                         <div className="mt-2 relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-on-surface-variant pointer-events-none" />
                           <Input
@@ -295,9 +325,11 @@ const Pay = () => {
                     <Eyebrow>Step 2</Eyebrow>
                     <h2 className="mt-3 text-display-md font-display">Select invoices to pay</h2>
                     <p className="mt-4 text-on-surface-variant">
-                      Pick one or more. Amounts combine into a single payment.
+                      Pick one or more, or add a custom charge below.
                     </p>
+
                     <div className="mt-10 space-y-3">
+                      {/* Existing invoices */}
                       {MOCK_INVOICES.map((inv) => {
                         const sel = selected.includes(inv.id);
                         return (
@@ -311,11 +343,7 @@ const Pay = () => {
                                 : "surface-low hover:bg-surface-base"
                             }`}
                           >
-                            <div
-                              className={`size-10 rounded-lg grid place-items-center ${
-                                sel ? "bg-primary-foreground/20" : "bg-surface-base"
-                              }`}
-                            >
+                            <div className={`size-10 rounded-lg grid place-items-center ${sel ? "bg-primary-foreground/20" : "bg-surface-base"}`}>
                               <FileText className="size-5 opacity-80" />
                             </div>
                             <div className="flex-1">
@@ -333,7 +361,73 @@ const Pay = () => {
                           </button>
                         );
                       })}
+
+                      {/* Custom invoice */}
+                      <div
+                        className={`rounded-xl border-2 transition-all ${
+                          selected.includes(customId)
+                            ? "border-primary bg-primary/5"
+                            : "border-dashed border-outline-variant/40 surface-low"
+                        }`}
+                      >
+                        <div className="p-5">
+                          <div className="flex items-center gap-2 mb-4">
+                            <Plus className="size-4 text-primary" />
+                            <span className="text-sm font-medium text-on-surface-variant">Custom charge</span>
+                            <span className="ml-auto text-xs text-on-surface-muted font-mono">{customId}</span>
+                          </div>
+                          <div className="grid sm:grid-cols-2 gap-3">
+                            <div>
+                              <Label className="label-eyebrow text-[10px]">Service description</Label>
+                              <Input
+                                className="mt-1.5 h-9 text-sm"
+                                placeholder="e.g. Lab work · Moore"
+                                value={custom.service}
+                                onChange={(e) => {
+                                  setCustom((c) => ({ ...c, service: e.target.value }));
+                                  if (!e.target.value.trim()) {
+                                    setSelected((s) => s.filter((x) => x !== customId));
+                                  }
+                                }}
+                              />
+                            </div>
+                            <div>
+                              <Label className="label-eyebrow text-[10px]">Amount ($)</Label>
+                              <Input
+                                className="mt-1.5 h-9 text-sm"
+                                type="number"
+                                min="0.01"
+                                step="0.01"
+                                placeholder="0.00"
+                                value={custom.amount}
+                                onChange={(e) => {
+                                  setCustom((c) => ({ ...c, amount: e.target.value }));
+                                  if (!parseFloat(e.target.value)) {
+                                    setSelected((s) => s.filter((x) => x !== customId));
+                                  }
+                                }}
+                              />
+                            </div>
+                          </div>
+                          {customFilled && (
+                            <button
+                              type="button"
+                              onClick={() => toggleInvoice(customId)}
+                              className={`mt-4 w-full py-2 rounded-lg text-sm font-medium transition-all ${
+                                selected.includes(customId)
+                                  ? "gradient-primary text-primary-foreground"
+                                  : "bg-surface-base hover:bg-surface-low border border-outline-variant/20"
+                              }`}
+                            >
+                              {selected.includes(customId)
+                                ? `Selected · $${parseFloat(custom.amount).toFixed(2)}`
+                                : `Add $${parseFloat(custom.amount).toFixed(2)} to payment`}
+                            </button>
+                          )}
+                        </div>
+                      </div>
                     </div>
+
                     {selected.length > 0 && (
                       <div className="mt-8 flex items-center justify-between px-5 py-4 rounded-xl surface-low">
                         <span className="text-sm text-on-surface-variant">
