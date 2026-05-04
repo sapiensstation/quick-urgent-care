@@ -1,7 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, FileText, CreditCard, Shield, Lock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, FileText, Shield, Lock } from "lucide-react";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import { Layout } from "@/components/Layout";
 import { Eyebrow } from "@/components/Editorial";
 import { Button } from "@/components/ui/button";
@@ -9,6 +16,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 const STEPS = ["Account", "Invoice", "Payment", "Done"] as const;
 
@@ -23,30 +32,82 @@ const accountSchema = z.object({
   dob: z.string().min(1, "Date of birth required"),
 });
 
-const paymentSchema = z.object({
-  name_on_card: z.string().trim().min(2, "Name required").max(100),
-  card_number: z.string().trim().regex(/^\d{12,19}$/, "Invalid card number"),
-  exp: z.string().trim().regex(/^(0[1-9]|1[0-2])\/\d{2}$/, "Use MM/YY"),
-  cvc: z.string().trim().regex(/^\d{3,4}$/, "Invalid CVC"),
-  zip: z.string().trim().min(3, "ZIP required").max(10),
-});
+function CheckoutForm({
+  total,
+  selected,
+  cardLast4,
+  onSuccess,
+}: {
+  total: number;
+  selected: string[];
+  cardLast4: (last4: string) => void;
+  onSuccess: () => void;
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!stripe || !elements) return;
+
+    setSubmitting(true);
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: { return_url: window.location.href },
+      redirect: "if_required",
+    });
+
+    if (error) {
+      toast({
+        title: "Payment failed",
+        description: error.message ?? "Something went wrong.",
+        variant: "destructive",
+      });
+      setSubmitting(false);
+      return;
+    }
+
+    if (paymentIntent?.status === "succeeded") {
+      const last4 = (paymentIntent as unknown as { payment_method_details?: { card?: { last4?: string } } })
+        ?.payment_method_details?.card?.last4 ?? "••••";
+      cardLast4(last4);
+      onSuccess();
+    }
+    setSubmitting(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <PaymentElement />
+      <div className="mt-6 flex items-center gap-2 text-xs text-on-surface-variant">
+        <Shield className="size-3.5" />
+        Your card details are encrypted by Stripe and never stored on our servers.
+      </div>
+      <div className="mt-8 pt-8 border-t border-outline-variant/15 flex items-center justify-between">
+        <span />
+        <Button type="submit" disabled={submitting || !stripe}>
+          {submitting ? "Processing…" : `Pay $${total.toFixed(2)}`}
+          <ArrowRight className="size-4" />
+        </Button>
+      </div>
+    </form>
+  );
+}
 
 const Pay = () => {
   const [step, setStep] = useState(0);
-  const [submitting, setSubmitting] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
   const [account, setAccount] = useState({ identifier: "", dob: "" });
-  const [payment, setPayment] = useState({
-    name_on_card: "",
-    card_number: "",
-    exp: "",
-    cvc: "",
-    zip: "",
-  });
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [last4, setLast4] = useState("••••");
+  const [loadingIntent, setLoadingIntent] = useState(false);
 
-  const total = MOCK_INVOICES.filter((i) => selected.includes(i.id)).reduce((s, i) => s + i.amount, 0);
+  const total = MOCK_INVOICES.filter((i) => selected.includes(i.id)).reduce(
+    (s, i) => s + i.amount,
+    0
+  );
 
-  const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1));
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
   const toggleInvoice = (id: string) =>
@@ -65,34 +126,40 @@ const Pay = () => {
     return true;
   };
 
-  const submit = async () => {
-    const parsed = paymentSchema.safeParse({
-      ...payment,
-      card_number: payment.card_number.replace(/\s/g, ""),
-    });
-    if (!parsed.success) {
-      toast({
-        title: "Check your payment details",
-        description: parsed.error.issues[0].message,
-        variant: "destructive",
-      });
-      return;
-    }
-    setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setSubmitting(false);
-    setStep(STEPS.length - 1);
-  };
-
   const canNext = () => {
     if (step === 0) return account.identifier.length > 4 && !!account.dob;
     if (step === 1) return selected.length > 0;
     return true;
   };
 
-  const onContinue = () => {
-    if (step === 0 && !validateAccount()) return;
-    next();
+  const onContinue = async () => {
+    if (step === 0) {
+      if (!validateAccount()) return;
+      setStep(1);
+      return;
+    }
+    if (step === 1) {
+      setLoadingIntent(true);
+      try {
+        const res = await fetch("/api/create-payment-intent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: total, invoices: selected }),
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        setClientSecret(data.clientSecret);
+        setStep(2);
+      } catch (err) {
+        toast({
+          title: "Could not initialize payment",
+          description: err instanceof Error ? err.message : "Try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setLoadingIntent(false);
+      }
+    }
   };
 
   return (
@@ -142,7 +209,7 @@ const Pay = () => {
 
             <div className="mt-10 flex items-center gap-2 text-xs text-on-surface-variant">
               <Lock className="size-3.5" />
-              Secured by 256-bit SSL encryption
+              Secured by Stripe &amp; 256-bit SSL
             </div>
           </aside>
 
@@ -163,9 +230,7 @@ const Pay = () => {
                           className="mt-2"
                           placeholder="405-555-0100 or QUC-10234"
                           value={account.identifier}
-                          onChange={(e) =>
-                            setAccount((a) => ({ ...a, identifier: e.target.value }))
-                          }
+                          onChange={(e) => setAccount((a) => ({ ...a, identifier: e.target.value }))}
                         />
                       </div>
                       <div>
@@ -211,23 +276,13 @@ const Pay = () => {
                             </div>
                             <div className="flex-1">
                               <div className="font-display font-semibold">{inv.service}</div>
-                              <div
-                                className={`mt-1 text-xs ${
-                                  sel ? "text-primary-foreground/70" : "text-on-surface-variant"
-                                }`}
-                              >
+                              <div className={`mt-1 text-xs ${sel ? "text-primary-foreground/70" : "text-on-surface-variant"}`}>
                                 {inv.id} · {inv.date}
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="font-display text-xl font-semibold">
-                                ${inv.amount.toFixed(2)}
-                              </div>
-                              <div
-                                className={`text-xs ${
-                                  sel ? "text-primary-foreground/70" : "text-on-surface-variant"
-                                }`}
-                              >
+                              <div className="font-display text-xl font-semibold">${inv.amount.toFixed(2)}</div>
+                              <div className={`text-xs ${sel ? "text-primary-foreground/70" : "text-on-surface-variant"}`}>
                                 {inv.status}
                               </div>
                             </div>
@@ -240,75 +295,34 @@ const Pay = () => {
                         <span className="text-sm text-on-surface-variant">
                           {selected.length} invoice{selected.length > 1 ? "s" : ""} selected
                         </span>
-                        <span className="font-display text-2xl font-semibold">
-                          ${total.toFixed(2)}
-                        </span>
+                        <span className="font-display text-2xl font-semibold">${total.toFixed(2)}</span>
                       </div>
                     )}
                   </>
                 )}
 
-                {step === 2 && (
+                {step === 2 && clientSecret && (
                   <>
                     <Eyebrow>Step 3</Eyebrow>
                     <h2 className="mt-3 text-display-md font-display">Payment details</h2>
                     <div className="mt-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container text-secondary-on-container text-xs font-medium">
-                      <CreditCard className="size-3" /> Charging ${total.toFixed(2)}
+                      Charging ${total.toFixed(2)}
                     </div>
-                    <div className="mt-8 grid sm:grid-cols-2 gap-5">
-                      <div className="sm:col-span-2">
-                        <Label className="label-eyebrow">Name on card *</Label>
-                        <Input
-                          className="mt-2"
-                          value={payment.name_on_card}
-                          onChange={(e) =>
-                            setPayment((p) => ({ ...p, name_on_card: e.target.value }))
-                          }
+                    <div className="mt-8">
+                      <Elements
+                        stripe={stripePromise}
+                        options={{
+                          clientSecret,
+                          appearance: { theme: "stripe" },
+                        }}
+                      >
+                        <CheckoutForm
+                          total={total}
+                          selected={selected}
+                          cardLast4={setLast4}
+                          onSuccess={() => setStep(3)}
                         />
-                      </div>
-                      <div className="sm:col-span-2">
-                        <Label className="label-eyebrow">Card number *</Label>
-                        <Input
-                          className="mt-2"
-                          inputMode="numeric"
-                          placeholder="1234 5678 9012 3456"
-                          value={payment.card_number}
-                          onChange={(e) =>
-                            setPayment((p) => ({ ...p, card_number: e.target.value }))
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label className="label-eyebrow">Expiration *</Label>
-                        <Input
-                          className="mt-2"
-                          placeholder="MM/YY"
-                          value={payment.exp}
-                          onChange={(e) => setPayment((p) => ({ ...p, exp: e.target.value }))}
-                        />
-                      </div>
-                      <div>
-                        <Label className="label-eyebrow">CVC *</Label>
-                        <Input
-                          className="mt-2"
-                          inputMode="numeric"
-                          placeholder="123"
-                          value={payment.cvc}
-                          onChange={(e) => setPayment((p) => ({ ...p, cvc: e.target.value }))}
-                        />
-                      </div>
-                      <div className="sm:col-span-2">
-                        <Label className="label-eyebrow">Billing ZIP *</Label>
-                        <Input
-                          className="mt-2 max-w-xs"
-                          value={payment.zip}
-                          onChange={(e) => setPayment((p) => ({ ...p, zip: e.target.value }))}
-                        />
-                      </div>
-                    </div>
-                    <div className="mt-8 flex items-center gap-2 text-xs text-on-surface-variant">
-                      <Shield className="size-3.5" />
-                      Your card details are encrypted and never stored on our servers.
+                      </Elements>
                     </div>
                   </>
                 )}
@@ -323,10 +337,7 @@ const Pay = () => {
                       We charged{" "}
                       <span className="text-foreground font-semibold">${total.toFixed(2)}</span> to
                       your card ending in{" "}
-                      <span className="text-foreground">
-                        {payment.card_number.slice(-4) || "••••"}
-                      </span>
-                      . A receipt is on its way.
+                      <span className="text-foreground">{last4}</span>. A receipt is on its way.
                     </p>
                     <div className="mt-10 flex gap-3">
                       <Button asChild variant="ghost">
@@ -340,21 +351,22 @@ const Pay = () => {
                 )}
               </div>
 
-              {step < 3 && (
+              {step < 2 && (
                 <div className="mt-10 pt-8 border-t border-outline-variant/15 flex items-center justify-between">
                   <Button variant="ghost" onClick={back} disabled={step === 0}>
                     <ArrowLeft className="size-4" /> Back
                   </Button>
-                  {step < 2 ? (
-                    <Button onClick={onContinue} disabled={!canNext()}>
-                      Continue <ArrowRight className="size-4" />
-                    </Button>
-                  ) : (
-                    <Button onClick={submit} disabled={submitting}>
-                      {submitting ? "Processing…" : `Pay $${total.toFixed(2)}`}{" "}
-                      <ArrowRight className="size-4" />
-                    </Button>
-                  )}
+                  <Button onClick={onContinue} disabled={!canNext() || loadingIntent}>
+                    {loadingIntent ? "Loading…" : "Continue"} <ArrowRight className="size-4" />
+                  </Button>
+                </div>
+              )}
+
+              {step === 2 && (
+                <div className="mt-4">
+                  <Button variant="ghost" onClick={back}>
+                    <ArrowLeft className="size-4" /> Back
+                  </Button>
                 </div>
               )}
             </div>

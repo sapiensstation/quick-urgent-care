@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { Eyebrow } from "@/components/Editorial";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-const heroClinic = "/assets/hero-clinic.jpg";
+const heroClinic = "/assets/IMG_1307.jpeg";
 
 const GALLERY = [
   {
@@ -41,6 +41,21 @@ const GALLERY = [
     alt: "Clinic view",
     className: "",
   },
+  {
+    src: "/assets/IMG_1327.jpeg",
+    alt: "Clinic team",
+    className: "md:col-span-2",
+  },
+  {
+    src: "/assets/IMG_1329.jpeg",
+    alt: "Clinic facilities",
+    className: "",
+  },
+  {
+    src: "/assets/IMG_1344.jpeg",
+    alt: "Patient care",
+    className: "",
+  },
 ];
 
 const About = () => (
@@ -51,7 +66,7 @@ const About = () => (
         <h1 className="mt-5 text-display-xl font-display">Locally owned.<br />Locally operated.<br />Lowest local costs.</h1>
       </div>
       <p className="lg:col-span-4 text-on-surface-variant text-lg leading-relaxed">
-        We opened our doors in April 2017 to serve Moore and OKC. Since then we've focused on one thing: getting people back to feeling like themselves.
+        Caring and efficient urgent cares serving families in the the Oklahoma City, Moore and surrounding areas since 2017. Our board certified providers have over 25 years of experience. We are honored to take care of you and your families!
       </p>
     </section>
 
@@ -68,7 +83,7 @@ const About = () => (
       </div>
       <div className="lg:col-span-7 space-y-6 text-lg text-on-surface-variant leading-relaxed">
         <p>
-          Urgent care should feel less like a transaction and more like a conversation. We built our clinics around that idea: fewer waiting rooms, more time with providers, transparent pricing, and the equipment to actually solve what brought you in.
+          When you’re hurting, every minute feels like an hour. We get it. That’s why we’ve reimagined urgent care to be as compassionate as it is quick. Expert clinicians who actually listen, in a space designed to help you breathe easier.
         </p>
         <p>
           Our providers carry over 25 years of combined emergency and family medicine experience. They are committed to top-notch care: for you, your kids, and your team at work.

@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowUpRight, MapPin, Phone, Clock } from "lucide-react";
 import { CLINICS } from "@/lib/clinics";
-const clinicMoore = "/assets/clinic-moore.jpg";
-const clinicOkc = "/assets/clinic-okc.jpg";
+const clinicMoore = "/assets/IMG_1308.jpeg";
+const clinicOkc = "/assets/IMG_1309.jpeg";
 
 const LOCATIONS = CLINICS.map((c) => ({
   img: c.id === "moore" ? clinicMoore : clinicOkc,
