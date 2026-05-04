@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, FileText, Shield, Lock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, FileText, Shield, Lock, Mail } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -30,19 +30,19 @@ const MOCK_INVOICES = [
 const accountSchema = z.object({
   identifier: z.string().trim().min(5, "Enter phone or account number").max(40),
   dob: z.string().min(1, "Date of birth required"),
+  email: z.string().trim().email("Valid email required"),
+  name: z.string().trim().min(2, "Name required").max(100),
 });
 
-function CheckoutForm({
-  total,
-  selected,
-  cardLast4,
-  onSuccess,
-}: {
+interface CheckoutFormProps {
   total: number;
-  selected: string[];
-  cardLast4: (last4: string) => void;
-  onSuccess: () => void;
-}) {
+  selectedInvoices: typeof MOCK_INVOICES;
+  email: string;
+  name: string;
+  onSuccess: (last4: string, paymentIntentId: string) => void;
+}
+
+function CheckoutForm({ total, selectedInvoices, email, name, onSuccess }: CheckoutFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [submitting, setSubmitting] = useState(false);
@@ -52,9 +52,13 @@ function CheckoutForm({
     if (!stripe || !elements) return;
 
     setSubmitting(true);
+
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      confirmParams: { return_url: window.location.href },
+      confirmParams: {
+        return_url: window.location.href,
+        payment_method_data: { billing_details: { email, name } },
+      },
       redirect: "if_required",
     });
 
@@ -69,11 +73,22 @@ function CheckoutForm({
     }
 
     if (paymentIntent?.status === "succeeded") {
-      const last4 = (paymentIntent as unknown as { payment_method_details?: { card?: { last4?: string } } })
-        ?.payment_method_details?.card?.last4 ?? "••••";
-      cardLast4(last4);
-      onSuccess();
+      // Send custom receipt
+      fetch("/api/send-receipt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          name,
+          total,
+          invoices: selectedInvoices,
+          paymentIntentId: paymentIntent.id,
+        }),
+      }).catch(() => {});
+
+      onSuccess("••••", paymentIntent.id);
     }
+
     setSubmitting(false);
   };
 
@@ -82,7 +97,7 @@ function CheckoutForm({
       <PaymentElement />
       <div className="mt-6 flex items-center gap-2 text-xs text-on-surface-variant">
         <Shield className="size-3.5" />
-        Your card details are encrypted by Stripe and never stored on our servers.
+        Card details encrypted by Stripe — never stored on our servers.
       </div>
       <div className="mt-8 pt-8 border-t border-outline-variant/15 flex items-center justify-between">
         <span />
@@ -98,15 +113,13 @@ function CheckoutForm({
 const Pay = () => {
   const [step, setStep] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
-  const [account, setAccount] = useState({ identifier: "", dob: "" });
+  const [account, setAccount] = useState({ identifier: "", dob: "", email: "", name: "" });
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [last4, setLast4] = useState("••••");
   const [loadingIntent, setLoadingIntent] = useState(false);
 
-  const total = MOCK_INVOICES.filter((i) => selected.includes(i.id)).reduce(
-    (s, i) => s + i.amount,
-    0
-  );
+  const selectedInvoices = MOCK_INVOICES.filter((i) => selected.includes(i.id));
+  const total = selectedInvoices.reduce((s, i) => s + i.amount, 0);
 
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
@@ -127,7 +140,13 @@ const Pay = () => {
   };
 
   const canNext = () => {
-    if (step === 0) return account.identifier.length > 4 && !!account.dob;
+    if (step === 0)
+      return (
+        account.identifier.length > 4 &&
+        !!account.dob &&
+        account.email.includes("@") &&
+        account.name.length > 1
+      );
     if (step === 1) return selected.length > 0;
     return true;
   };
@@ -144,7 +163,7 @@ const Pay = () => {
         const res = await fetch("/api/create-payment-intent", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: total, invoices: selected }),
+          body: JSON.stringify({ amount: total, invoices: selected, email: account.email }),
         });
         const data = await res.json();
         if (data.error) throw new Error(data.error);
@@ -176,7 +195,7 @@ const Pay = () => {
               minute.
             </h1>
             <p className="mt-6 text-on-surface-variant leading-relaxed">
-              Secure one-time payment. No login required. We accept all major cards.
+              Secure one-time payment. No login required. Receipt sent to your email.
             </p>
 
             <ol className="mt-12 space-y-2">
@@ -216,21 +235,23 @@ const Pay = () => {
           <div className="lg:col-span-8">
             <div className="surface-lowest rounded-xl p-8 lg:p-12 lift-soft min-h-[520px] flex flex-col">
               <div className="flex-1 animate-fade-in" key={step}>
+
+                {/* STEP 1 — Account */}
                 {step === 0 && (
                   <>
                     <Eyebrow>Step 1</Eyebrow>
                     <h2 className="mt-3 text-display-md font-display">Find your account</h2>
                     <p className="mt-4 text-on-surface-variant max-w-lg">
-                      Enter the phone number or account ID on your bill, plus the patient's date of birth.
+                      Enter your details to locate your account. Receipt will be sent to your email.
                     </p>
                     <div className="mt-10 grid sm:grid-cols-2 gap-5 max-w-xl">
-                      <div className="sm:col-span-2">
-                        <Label className="label-eyebrow">Phone or account ID *</Label>
+                      <div>
+                        <Label className="label-eyebrow">Full name *</Label>
                         <Input
                           className="mt-2"
-                          placeholder="405-555-0100 or QUC-10234"
-                          value={account.identifier}
-                          onChange={(e) => setAccount((a) => ({ ...a, identifier: e.target.value }))}
+                          placeholder="Jane Smith"
+                          value={account.name}
+                          onChange={(e) => setAccount((a) => ({ ...a, name: e.target.value }))}
                         />
                       </div>
                       <div>
@@ -242,10 +263,33 @@ const Pay = () => {
                           onChange={(e) => setAccount((a) => ({ ...a, dob: e.target.value }))}
                         />
                       </div>
+                      <div className="sm:col-span-2">
+                        <Label className="label-eyebrow">Phone or account ID *</Label>
+                        <Input
+                          className="mt-2"
+                          placeholder="405-555-0100 or QUC-10234"
+                          value={account.identifier}
+                          onChange={(e) => setAccount((a) => ({ ...a, identifier: e.target.value }))}
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <Label className="label-eyebrow">Email address * <span className="text-on-surface-muted normal-case font-normal">(receipt sent here)</span></Label>
+                        <div className="mt-2 relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-on-surface-variant pointer-events-none" />
+                          <Input
+                            type="email"
+                            className="pl-9"
+                            placeholder="jane@example.com"
+                            value={account.email}
+                            onChange={(e) => setAccount((a) => ({ ...a, email: e.target.value }))}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </>
                 )}
 
+                {/* STEP 2 — Invoice selection */}
                 {step === 1 && (
                   <>
                     <Eyebrow>Step 2</Eyebrow>
@@ -301,12 +345,18 @@ const Pay = () => {
                   </>
                 )}
 
+                {/* STEP 3 — Stripe Payment */}
                 {step === 2 && clientSecret && (
                   <>
                     <Eyebrow>Step 3</Eyebrow>
                     <h2 className="mt-3 text-display-md font-display">Payment details</h2>
-                    <div className="mt-6 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container text-secondary-on-container text-xs font-medium">
-                      Charging ${total.toFixed(2)}
+                    <div className="mt-4 flex flex-wrap gap-3 items-center">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-container text-secondary-on-container text-xs font-medium">
+                        Charging ${total.toFixed(2)}
+                      </div>
+                      <div className="inline-flex items-center gap-1.5 text-xs text-on-surface-variant">
+                        <Mail className="size-3.5" /> Receipt → {account.email}
+                      </div>
                     </div>
                     <div className="mt-8">
                       <Elements
@@ -318,15 +368,20 @@ const Pay = () => {
                       >
                         <CheckoutForm
                           total={total}
-                          selected={selected}
-                          cardLast4={setLast4}
-                          onSuccess={() => setStep(3)}
+                          selectedInvoices={selectedInvoices}
+                          email={account.email}
+                          name={account.name}
+                          onSuccess={(l4) => {
+                            setLast4(l4);
+                            setStep(3);
+                          }}
                         />
                       </Elements>
                     </div>
                   </>
                 )}
 
+                {/* STEP 4 — Done */}
                 {step === 3 && (
                   <div className="h-full flex flex-col items-center justify-center text-center py-16 animate-scale-in">
                     <div className="size-16 rounded-full gradient-primary grid place-items-center text-primary-foreground lift-ambient">
@@ -335,9 +390,9 @@ const Pay = () => {
                     <h2 className="mt-8 text-display-md font-display">Payment received.</h2>
                     <p className="mt-4 text-on-surface-variant max-w-md">
                       We charged{" "}
-                      <span className="text-foreground font-semibold">${total.toFixed(2)}</span> to
-                      your card ending in{" "}
-                      <span className="text-foreground">{last4}</span>. A receipt is on its way.
+                      <span className="text-foreground font-semibold">${total.toFixed(2)}</span>.
+                      A receipt is on its way to{" "}
+                      <span className="text-foreground">{account.email}</span>.
                     </p>
                     <div className="mt-10 flex gap-3">
                       <Button asChild variant="ghost">

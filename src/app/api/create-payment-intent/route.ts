@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export async function POST(req: Request) {
   try {
-    const { amount, invoices } = await req.json();
+    const { amount, invoices, email } = await req.json();
 
     if (!amount || amount <= 0) {
       return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
@@ -14,8 +14,13 @@ export async function POST(req: Request) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100),
       currency: "usd",
+      automatic_payment_methods: { enabled: true },
+      receipt_email: email || undefined,
       description: `Quick Urgent Care bill payment — ${invoices?.join(", ") ?? ""}`,
-      metadata: { invoices: invoices?.join(",") ?? "" },
+      metadata: {
+        invoices: invoices?.join(",") ?? "",
+        patient_email: email ?? "",
+      },
     });
 
     return NextResponse.json({ clientSecret: paymentIntent.client_secret });
