@@ -28,9 +28,14 @@ export const Nav = () => {
             <span className="flex items-center gap-2 opacity-90"><MapPin className="size-3" /> Moore · Oklahoma City</span>
             <span className="opacity-75">Open daily 7am – 8pm</span>
           </div>
-          <a href="tel:4052857222" className="flex items-center gap-2 hover:opacity-100 opacity-90 transition-opacity">
-            <Phone className="size-3" /> 405-285-7222
-          </a>
+          <div className="flex items-center gap-4">
+            <a href="tel:4052857222" className="flex items-center gap-2 hover:opacity-100 opacity-90 transition-opacity">
+              <Phone className="size-3" /> Moore: 405-285-7222
+            </a>
+            <a href="tel:4052862888" className="flex items-center gap-2 hover:opacity-100 opacity-90 transition-opacity">
+              OKC: 405-286-2888
+            </a>
+          </div>
         </div>
       </div>
 
@@ -140,7 +145,8 @@ export const Footer = () => (
         <ul className="space-y-3 text-sm">
           <li className="text-on-surface-variant">2212 N Broadway Ave, Moore, OK 73160</li>
           <li className="text-on-surface-variant">1421 NW 122nd St, Oklahoma City, OK 73114</li>
-          <li><a className="hover:text-primary" href="tel:4052857222">405-285-7222</a></li>
+          <li><a className="hover:text-primary" href="tel:4052857222">Moore: 405-285-7222</a></li>
+          <li><a className="hover:text-primary" href="tel:4052862888">OKC: 405-286-2888</a></li>
           <li className="text-on-surface-variant">Fax 405-285-7227</li>
         </ul>
       </div>
@@ -193,6 +199,13 @@ const ClinicActionList = ({ onPick }: { onPick?: () => void }) => (
             className="flex-1 inline-flex items-center justify-center gap-1.5 surface-low rounded-lg px-3 py-2 text-xs font-medium border border-outline-variant/20"
           >
             <Navigation className="size-3.5" /> Directions
+          </a>
+          <a
+            href={`tel:${c.phone.replace(/-/g, "")}`}
+            onClick={onPick}
+            className="flex-1 inline-flex items-center justify-center gap-1.5 surface-low rounded-lg px-3 py-2 text-xs font-medium border border-outline-variant/20"
+          >
+            <Phone className="size-3.5" /> Call
           </a>
         </div>
       </li>

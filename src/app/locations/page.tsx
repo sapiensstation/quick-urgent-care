@@ -20,7 +20,7 @@ const LOCATIONS = CLINICS.map((c) => ({
   note:
     c.id === "moore"
       ? "Flagship clinic on N Broadway Ave. On-site digital X-ray and ultrasound."
-      : "Conveniently located on NW 122nd St. Serving north OKC and surrounding neighborhoods.",
+      : "Conveniently located on NW 122nd St. On-site digital X-ray. Serving north OKC and surrounding neighborhoods.",
 }));
 
 const Locations = () => (
@@ -90,7 +90,7 @@ const Locations = () => (
       <div className="surface-low rounded-xl p-12 lg:p-16 grid md:grid-cols-3 gap-8 text-center md:text-left">
         {[
           { icon: Clock, title: "Open daily", desc: "7am to 8pm, every single day — including holidays." },
-          { icon: MapPin, title: "Two locations", desc: "Moore and Oklahoma City — both with on-site imaging." },
+          { icon: MapPin, title: "Two locations", desc: "Moore (X-ray & ultrasound) and Oklahoma City (X-ray) — walk in any time." },
           { icon: Phone, title: "Call ahead", desc: "Our team will tell you exactly what to expect." },
         ].map(({ icon: Icon, title, desc }) => (
           <div key={title} className="flex flex-col items-center md:items-start gap-3">

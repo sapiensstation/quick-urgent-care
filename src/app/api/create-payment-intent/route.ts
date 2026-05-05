@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100),
       currency: "usd",
-      automatic_payment_methods: { enabled: true },
+      payment_method_types: ["card"],
       receipt_email: email || undefined,
       description: `Quick Urgent Care bill payment — ${invoices?.join(", ") ?? ""}`,
       metadata: {

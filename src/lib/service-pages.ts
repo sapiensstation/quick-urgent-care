@@ -24,35 +24,34 @@ export const SERVICE_PAGES: ServicePage[] = [
       "Same-visit imaging for fractures, sprains, pneumonia, foreign bodies, and more. Our providers read your images in real time so you walk out with answers and a treatment plan.",
     highlights: [
       { title: "Read on-site", desc: "Board-certified provider reads images during your visit — no overnight wait." },
-      { title: "Pediatric-friendly", desc: "Calm imaging room and trained staff for kids 6 months and up." },
-      { title: "Shared with your PCP", desc: "Images forwarded to your primary care provider within 24 hours." },
+      { title: "Pediatric-friendly", desc: "Calm imaging room and trained staff for children 3 months and up." },
+      { title: "Take your images home", desc: "Images provided on CD at the end of your visit. You can share them with any provider." },
     ],
     faqs: [
       { q: "Do I need an appointment for an X-ray?", a: "No. Walk in any day 7am–8pm. Reserving online is faster." },
-      { q: "How much does an X-ray cost?", a: "Self-pay is $75 per region. Most major insurance accepted." },
+      { q: "How much does an X-ray cost?", a: "We accept most major insurance. Self-pay rates available — call us for details." },
       { q: "Will I get my results today?", a: "Yes. Our providers read on-site and review findings with you during the visit." },
     ],
-    price: "$75 per region",
   },
   {
     slug: "vaccinations",
     title: "Vaccinations",
     metaTitle: "Walk-In Vaccinations & Flu Shots — Moore & OKC",
     metaDescription:
-      "Walk-in flu shots, COVID-19, tetanus, travel, and school vaccines for adults and kids 6 months and up. Open daily 7am–8pm.",
+      "Walk-in flu shots, Tdap, and DTaP vaccines for adults and children 3 months and up. Open daily 7am–8pm in Moore and Oklahoma City.",
     eyebrow: "Preventive",
     hero: "Vaccinations, no appointment needed.",
     intro:
-      "Routine and travel vaccines for the whole family. Bring your immunization record if available — we will update it and forward to your PCP.",
+      "Flu shots, Tdap, and DTaP for adults and children. Walk in any day — no appointment required.",
     highlights: [
-      { title: "Adult & pediatric", desc: "Children 6 months and up. Family appointments welcome." },
+      { title: "Adult & pediatric", desc: "Children 3 months and up. Family visits welcome." },
       { title: "Walk-in friendly", desc: "Most visits done in under 30 minutes." },
-      { title: "Travel & school", desc: "Tdap, MMR, hepatitis, typhoid, yellow fever (when available)." },
+      { title: "Vaccines we offer", desc: "Tdap, DTaP, and seasonal flu vaccine." },
     ],
     faqs: [
       { q: "Do you take insurance for vaccines?", a: "Yes — most major commercial plans, Medicare, and self-pay." },
       { q: "Can my child get school physicals and shots in one visit?", a: "Yes — we combine physicals and immunizations to save you a trip." },
-      { q: "Do you offer flu shots year-round?", a: "Seasonal flu vaccine available August through April. Year-round COVID-19 boosters per CDC guidance." },
+      { q: "Do you offer flu shots year-round?", a: "Seasonal flu vaccine is available August through April." },
     ],
   },
   {
@@ -87,16 +86,15 @@ export const SERVICE_PAGES: ServicePage[] = [
     intro:
       "Quick, affordable physicals for school, sports, work, and DOT certification. Most visits wrap up in 20–30 minutes including paperwork.",
     highlights: [
-      { title: "Sports / school — $45", desc: "Form filled out and signed during the visit." },
-      { title: "DOT — $85", desc: "Certified medical examiner. Same-day completion." },
+      { title: "Sports & school physicals", desc: "Form filled out and signed during the visit." },
+      { title: "DOT physicals", desc: "Certified medical examiner. Same-day completion." },
       { title: "Pre-employment", desc: "Customizable to employer requirements." },
     ],
     faqs: [
-      { q: "Do you take insurance for physicals?", a: "Most physicals are self-pay; some employer programs are billed directly." },
+      { q: "Do you take insurance for physicals?", a: "Most physicals are self-pay; some employer programs are billed directly. Call for current rates." },
       { q: "Can you fax my form to the school?", a: "Yes — bring the form with the recipient fax number, we will send it." },
       { q: "Do I need to fast?", a: "No fasting required for sports, school, or DOT physicals." },
     ],
-    price: "From $45",
   },
   {
     slug: "occupational-medicine",
@@ -107,7 +105,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     eyebrow: "Occupational",
     hero: "Occupational medicine for Oklahoma employers.",
     intro:
-      "We partner with local businesses for workers' comp, injury care, return-to-work evaluations, OSHA respiratory clearances, and ongoing employee health programs.",
+      "We partner with local businesses for workers' comp, injury care, return-to-work evaluations, and ongoing employee health programs.",
     highlights: [
       { title: "Workers' comp", desc: "Same-day evaluation, treatment, and reporting back to the employer." },
       { title: "Return-to-work", desc: "Functional capacity evaluations and modified-duty letters." },
@@ -116,7 +114,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     faqs: [
       { q: "Do you bill our workers' comp carrier directly?", a: "Yes. Bring claim and employer info to the first visit." },
       { q: "Can we set up a corporate account?", a: "Yes — call us at 405-285-7222 to set up billing and protocols." },
-      { q: "Do you handle OSHA respirator clearances?", a: "Yes. We perform the medical eval and pulmonary function testing on-site." },
+      { q: "Do you handle drug testing?", a: "Yes — DOT-compliant and standard employer panels available. Walk in or set up a standing order." },
     ],
   },
   {
@@ -130,14 +128,14 @@ export const SERVICE_PAGES: ServicePage[] = [
     intro:
       "Rapid in-clinic tests for strep, flu, RSV, COVID-19, mono, urinalysis, and pregnancy. Confidential STD panels, basic metabolic, lipid, and CBC via lab partner.",
     highlights: [
-      { title: "Rapid in-clinic", desc: "Strep ($35), flu, RSV, COVID-19 antigen — results in 10–30 minutes." },
+      { title: "Rapid in-clinic", desc: "Strep, flu, RSV, COVID-19 antigen — results in 10–30 minutes." },
       { title: "Lab draws", desc: "Blood draws sent to our partner lab. Results in 24–72 hours." },
       { title: "Confidential STD", desc: "Discreet, judgment-free testing with private results." },
     ],
     faqs: [
       { q: "Do I need a doctor's order?", a: "No. Most tests are available walk-in. Some specialty panels may require an evaluation." },
       { q: "Will my insurance cover it?", a: "Most major commercial plans cover medically necessary labs. Self-pay rates posted." },
-      { q: "How do I get my results?", a: "In-clinic results are reviewed during your visit. Lab results posted to your portal or by phone in 1–3 days." },
+      { q: "How do I get my results?", a: "In-clinic results are reviewed during your visit. Send-out lab results returned by phone in 1–3 days." },
     ],
   },
 ];

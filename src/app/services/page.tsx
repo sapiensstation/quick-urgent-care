@@ -26,9 +26,9 @@ const SERVICE_GROUPS = [
   {
     label: "Preventive & screening",
     items: [
-      { icon: ClipboardList, title: "Sports & school physicals", desc: "$45. Forms completed at visit, often within 30 minutes." },
-      { icon: Briefcase, title: "DOT physicals", desc: "Certified medical examiner. $85, completed same-day." },
-      { icon: Syringe, title: "Vaccinations & flu shots", desc: "Travel, school, seasonal: adults and children 6mo+." },
+      { icon: ClipboardList, title: "Sports & school physicals", desc: "Forms completed at visit, often within 30 minutes." },
+      { icon: Briefcase, title: "DOT physicals", desc: "Certified medical examiner. Completed same-day." },
+      { icon: Syringe, title: "Vaccinations & flu shots", desc: "Tdap, DTaP, and flu vaccine for adults and children 3 months and up." },
     ],
   },
   {
@@ -36,7 +36,7 @@ const SERVICE_GROUPS = [
     items: [
       { icon: FlaskConical, title: "Lab draws & STD panels", desc: "Confidential testing with results in 24–72 hours." },
       { icon: Briefcase, title: "On-site drug testing", desc: "Employer programs, pre-employment, random screenings." },
-      { icon: Baby, title: "Pediatric urgent care", desc: "Gentle, family-first care from 6 months and up." },
+      { icon: Baby, title: "Pediatric urgent care", desc: "Gentle, family-first care from 3 months and up." },
     ],
   },
 ];

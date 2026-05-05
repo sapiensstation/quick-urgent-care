@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, FileText, Shield, Lock, Mail, Plus } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Shield, Lock, Mail, Plus } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -23,11 +23,6 @@ const STEPS = ["Account", "Invoice", "Payment", "Done"] as const;
 
 const today = new Date().toISOString().split("T")[0];
 
-const MOCK_INVOICES = [
-  { id: "INV-20432", date: today, service: "Office visit · Moore", amount: 89.0, status: "Due" },
-  { id: "INV-20310", date: today, service: "Office visit · OKC", amount: 89.0, status: "Due" },
-];
-
 type Invoice = { id: string; date: string; service: string; amount: number; status: string };
 
 const accountSchema = z.object({
@@ -42,7 +37,7 @@ interface CheckoutFormProps {
   selectedInvoices: Invoice[];
   email: string;
   name: string;
-  onSuccess: (last4: string, paymentIntentId: string) => void;
+  onSuccess: (paymentIntentId: string) => void;
 }
 
 function CheckoutForm({ total, selectedInvoices, email, name, onSuccess }: CheckoutFormProps) {
@@ -88,7 +83,7 @@ function CheckoutForm({ total, selectedInvoices, email, name, onSuccess }: Check
         }),
       }).catch(() => {});
 
-      onSuccess("••••", paymentIntent.id);
+      onSuccess(paymentIntent.id);
     }
 
     setSubmitting(false);
@@ -117,7 +112,6 @@ const Pay = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [account, setAccount] = useState({ identifier: "", dob: "", email: "", name: "" });
   const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [last4, setLast4] = useState("••••");
   const [loadingIntent, setLoadingIntent] = useState(false);
 
   const [customId] = useState(
@@ -129,16 +123,12 @@ const Pay = () => {
   const customInvoice: Invoice = {
     id: customId,
     date: today,
-    service: custom.service.trim() || "Custom service",
+    service: custom.service.trim() || "Service",
     amount: parseFloat(custom.amount) || 0,
     status: "Due",
   };
 
-  const allInvoices: Invoice[] = [
-    ...MOCK_INVOICES,
-    ...(customFilled ? [customInvoice] : []),
-  ];
-
+  const allInvoices: Invoice[] = customFilled ? [customInvoice] : [];
   const selectedInvoices = allInvoices.filter((i) => selected.includes(i.id));
   const total = selectedInvoices.reduce((s, i) => s + i.amount, 0);
 
@@ -267,9 +257,9 @@ const Pay = () => {
                 {step === 0 && (
                   <>
                     <Eyebrow>Step 1</Eyebrow>
-                    <h2 className="mt-3 text-display-md font-display">Find your account</h2>
+                    <h2 className="mt-3 text-display-md font-display">Your information</h2>
                     <p className="mt-4 text-on-surface-variant max-w-lg">
-                      Enter your details to locate your account. Receipt will be sent to your email.
+                      Enter your details below. Receipt will be sent to your email.
                     </p>
                     <div className="mt-10 grid sm:grid-cols-2 gap-5 max-w-xl">
                       <div>
@@ -319,50 +309,16 @@ const Pay = () => {
                   </>
                 )}
 
-                {/* STEP 2 — Invoice selection */}
+                {/* STEP 2 — Invoice entry */}
                 {step === 1 && (
                   <>
                     <Eyebrow>Step 2</Eyebrow>
-                    <h2 className="mt-3 text-display-md font-display">Select invoices to pay</h2>
+                    <h2 className="mt-3 text-display-md font-display">Enter your invoice</h2>
                     <p className="mt-4 text-on-surface-variant">
-                      Pick one or more, or add a custom charge below.
+                      Enter the service description and amount from your statement, then add it to your payment.
                     </p>
 
-                    <div className="mt-10 space-y-3">
-                      {/* Existing invoices */}
-                      {MOCK_INVOICES.map((inv) => {
-                        const sel = selected.includes(inv.id);
-                        return (
-                          <button
-                            key={inv.id}
-                            type="button"
-                            onClick={() => toggleInvoice(inv.id)}
-                            className={`w-full text-left p-5 rounded-xl transition-all flex items-center gap-5 ${
-                              sel
-                                ? "bg-primary text-primary-foreground lift-soft"
-                                : "surface-low hover:bg-surface-base"
-                            }`}
-                          >
-                            <div className={`size-10 rounded-lg grid place-items-center ${sel ? "bg-primary-foreground/20" : "bg-surface-base"}`}>
-                              <FileText className="size-5 opacity-80" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="font-display font-semibold">{inv.service}</div>
-                              <div className={`mt-1 text-xs ${sel ? "text-primary-foreground/70" : "text-on-surface-variant"}`}>
-                                {inv.id} · {inv.date}
-                              </div>
-                            </div>
-                            <div className="text-right">
-                              <div className="font-display text-xl font-semibold">${inv.amount.toFixed(2)}</div>
-                              <div className={`text-xs ${sel ? "text-primary-foreground/70" : "text-on-surface-variant"}`}>
-                                {inv.status}
-                              </div>
-                            </div>
-                          </button>
-                        );
-                      })}
-
-                      {/* Custom invoice */}
+                    <div className="mt-10">
                       <div
                         className={`rounded-xl border-2 transition-all ${
                           selected.includes(customId)
@@ -373,7 +329,7 @@ const Pay = () => {
                         <div className="p-5">
                           <div className="flex items-center gap-2 mb-4">
                             <Plus className="size-4 text-primary" />
-                            <span className="text-sm font-medium text-on-surface-variant">Custom charge</span>
+                            <span className="text-sm font-medium text-on-surface-variant">Invoice details</span>
                             <span className="ml-auto text-xs text-on-surface-muted font-mono">{customId}</span>
                           </div>
                           <div className="grid sm:grid-cols-2 gap-3">
@@ -381,7 +337,7 @@ const Pay = () => {
                               <Label className="label-eyebrow text-[10px]">Service description</Label>
                               <Input
                                 className="mt-1.5 h-9 text-sm"
-                                placeholder="e.g. Lab work · Moore"
+                                placeholder="e.g. Office visit · Moore"
                                 value={custom.service}
                                 onChange={(e) => {
                                   setCustom((c) => ({ ...c, service: e.target.value }));
@@ -421,7 +377,7 @@ const Pay = () => {
                             >
                               {selected.includes(customId)
                                 ? `Selected · $${parseFloat(custom.amount).toFixed(2)}`
-                                : `Add $${parseFloat(custom.amount).toFixed(2)} to payment`}
+                                : `Pay $${parseFloat(custom.amount).toFixed(2)}`}
                             </button>
                           )}
                         </div>
@@ -430,9 +386,7 @@ const Pay = () => {
 
                     {selected.length > 0 && (
                       <div className="mt-8 flex items-center justify-between px-5 py-4 rounded-xl surface-low">
-                        <span className="text-sm text-on-surface-variant">
-                          {selected.length} invoice{selected.length > 1 ? "s" : ""} selected
-                        </span>
+                        <span className="text-sm text-on-surface-variant">Total</span>
                         <span className="font-display text-2xl font-semibold">${total.toFixed(2)}</span>
                       </div>
                     )}
@@ -465,10 +419,7 @@ const Pay = () => {
                           selectedInvoices={selectedInvoices}
                           email={account.email}
                           name={account.name}
-                          onSuccess={(l4) => {
-                            setLast4(l4);
-                            setStep(3);
-                          }}
+                          onSuccess={() => setStep(3)}
                         />
                       </Elements>
                     </div>

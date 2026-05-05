@@ -37,7 +37,7 @@ export const CLINICS: Clinic[] = [
     street: "1421 NW 122nd St",
     zip: "73114",
     fullAddress: "1421 NW 122nd St, Oklahoma City, OK 73114",
-    phone: "405-285-7222",
+    phone: "405-286-2888",
     fax: "405-285-7224",
     wait: 18,
     geo: { lat: 35.5829, lng: -97.5249 },

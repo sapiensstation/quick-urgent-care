@@ -7,37 +7,37 @@ const heroClinic = "/assets/IMG_1307.jpeg";
 
 const GALLERY = [
   {
-    src: "https://quickurgentcareok.com/wp-content/uploads/2022/03/entrance.jpg",
+    src: "/assets/IMG_1308.jpeg",
     alt: "Clinic entrance",
     className: "md:col-span-2 md:row-span-2",
   },
   {
-    src: "https://quickurgentcareok.com/wp-content/uploads/2022/03/Services.jpg",
-    alt: "Services",
+    src: "/assets/IMG_1309.jpeg",
+    alt: "Clinic exterior",
     className: "md:col-span-2",
   },
   {
-    src: "https://quickurgentcareok.com/wp-content/uploads/2022/03/774277_4e6d57d839794327b92dc04160202d4d_mv2_d_2048_1536_s_2.jpg",
+    src: "/assets/IMG_1312.jpeg",
     alt: "Exam room",
     className: "",
   },
   {
-    src: "https://quickurgentcareok.com/wp-content/uploads/2022/03/774277_59ebfa3f4d5c42cebb936a5be86d24b9_mv2_d_2048_1536_s_2.jpg",
+    src: "/assets/IMG_1314.jpeg",
     alt: "Clinic interior",
     className: "",
   },
   {
-    src: "https://quickurgentcareok.com/wp-content/uploads/2022/03/774277_bf232cba77a5411cb1a60f81fff4c76d_mv2_d_2048_1536_s_2.jpg",
+    src: "/assets/IMG_1316.jpeg",
     alt: "Waiting area",
     className: "md:col-span-2",
   },
   {
-    src: "https://quickurgentcareok.com/wp-content/uploads/2022/03/quick-urgent-care-1.jpg",
-    alt: "Quick Urgent Care building",
+    src: "/assets/IMG_1320.jpeg",
+    alt: "Quick Urgent Care",
     className: "md:col-span-2",
   },
   {
-    src: "https://quickurgentcareok.com/wp-content/uploads/2022/03/unnamed.jpg",
+    src: "/assets/IMG_1321.jpeg",
     alt: "Clinic view",
     className: "",
   },
@@ -96,7 +96,7 @@ const About = () => (
         <Eyebrow tone="primary">Gallery</Eyebrow>
         <h2 className="mt-4 text-display-lg font-display">A look inside our clinic.</h2>
         <p className="mt-5 text-on-surface-variant text-lg max-w-2xl leading-relaxed">
-          Calm spaces, modern equipment, and a team that moves quickly so you don't have to wait.
+          Calm spaces, modern equipment, and a team that moves quickly so you don&apos;t have to wait.
         </p>
 
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-3">
@@ -125,7 +125,7 @@ const About = () => (
       <div className="rounded-xl gradient-primary text-primary-foreground p-12 lg:p-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lift-ambient">
         <div>
           <h2 className="font-display text-display-md">Come see the difference.</h2>
-          <p className="mt-3 text-primary-foreground/80 max-w-xl">Book a visit and meet the team that's quietly raising the bar in Oklahoma urgent care.</p>
+          <p className="mt-3 text-primary-foreground/80 max-w-xl">Book a visit and meet the team that&apos;s quietly raising the bar in Oklahoma urgent care.</p>
         </div>
         <Button asChild variant="glass" size="xl"><Link href="/book">Book a visit</Link></Button>
       </div>

@@ -71,18 +71,6 @@ export default async function ServiceDetail(
         <p className="lg:col-span-4 text-on-surface-variant text-lg leading-relaxed">{svc.intro}</p>
       </section>
 
-      {svc.price && (
-        <section className="container">
-          <div className="surface-lowest rounded-xl p-6 lg:p-8 flex items-center justify-between gap-4 lift-soft">
-            <div>
-              <div className="label-eyebrow">Self-pay rate</div>
-              <div className="mt-1 font-display text-2xl font-semibold">{svc.price}</div>
-            </div>
-            <Button asChild><Link href="/book">Book a visit <ArrowUpRight className="size-4" /></Link></Button>
-          </div>
-        </section>
-      )}
-
       <section className="container py-16 grid md:grid-cols-3 gap-4">
         {svc.highlights.map((h) => (
           <div key={h.title} className="surface-lowest rounded-xl p-7">
