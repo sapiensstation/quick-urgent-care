@@ -173,7 +173,7 @@ export const Footer = () => (
 const ClinicActionList = ({ onPick }: { onPick?: () => void }) => (
   <ul className="py-2">
     {CLINICS.map((c) => (
-      <li key={c.id} className="px-4 py-3 hover:bg-surface-low transition-colors">
+      <li key={c.id} className="px-3 py-3 hover:bg-surface-low transition-colors">
         <div className="flex items-start gap-3">
           <MapPin className="size-4 text-primary mt-0.5 shrink-0" />
           <div className="min-w-0 flex-1">
@@ -189,7 +189,7 @@ const ClinicActionList = ({ onPick }: { onPick?: () => void }) => (
             onClick={onPick}
             className="flex-1 inline-flex items-center justify-center gap-1.5 gradient-primary text-primary-foreground rounded-lg px-3 py-2 text-xs font-medium"
           >
-            <CalendarPlus className="size-3.5" /> Book now
+            <CalendarPlus className="size-3.5" /> Book
           </a>
           <a
             href={c.mapsUrl}
