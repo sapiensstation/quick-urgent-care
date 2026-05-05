@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone, MapPin, CalendarPlus, Navigation } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
@@ -42,13 +43,7 @@ export const Nav = () => {
       <header className="sticky top-0 z-50 glass">
         <div className="container flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="size-10 rounded-xl gradient-primary grid place-items-center text-primary-foreground font-display font-bold text-lg shadow-press">
-              Q
-            </div>
-            <div className="leading-tight">
-              <div className="font-display font-semibold text-base tracking-tight">Quick Urgent Care</div>
-              <div className="text-[10px] tracking-[0.16em] uppercase text-on-surface-variant">Oklahoma · Est. 2017</div>
-            </div>
+            <Image src="/logo.png" alt="Quick Urgent Care" width={1166} height={756} className="h-10 w-auto" />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">
@@ -115,8 +110,7 @@ export const Footer = () => (
     <div className="container py-20 grid lg:grid-cols-12 gap-12">
       <div className="lg:col-span-5">
         <div className="flex items-center gap-3">
-          <div className="size-10 rounded-xl gradient-primary grid place-items-center text-primary-foreground font-display font-bold">Q</div>
-          <div className="font-display font-semibold text-lg">Quick Urgent Care</div>
+          <Image src="/logo.png" alt="Quick Urgent Care" width={1166} height={756} className="h-10 w-auto" />
         </div>
         <p className="mt-6 text-on-surface-variant max-w-md leading-relaxed">
           Walk-in urgent care clinics serving Moore and Oklahoma City. We opened in April 2017 and provide
