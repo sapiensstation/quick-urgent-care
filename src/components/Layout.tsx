@@ -64,9 +64,9 @@ export const Nav = () => {
             {/* <Button variant="ghost" size="sm" asChild>
               <Link href="/pay">Pay bill</Link>
             </Button> */}
-            <Button asChild size="default">
+            {/* <Button asChild size="default">
               <Link href="/pay">Pay bill</Link>
-            </Button>
+            </Button> */}
             {/* <Button asChild size="default">
               <Link href="/book">Book a visit</Link>
             </Button> */}
