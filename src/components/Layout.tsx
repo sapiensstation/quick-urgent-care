@@ -61,15 +61,9 @@ export const Nav = () => {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
-            {/* <Button variant="ghost" size="sm" asChild>
-              <Link href="/pay">Pay bill</Link>
-            </Button> */}
-            {/* <Button asChild size="default">
-              <Link href="/pay">Pay bill</Link>
-            </Button> */}
-            {/* <Button asChild size="default">
-              <Link href="/book">Book a visit</Link>
-            </Button> */}
+            <Button asChild size="default">
+              <a href="https://quickurgentcare.webpay.md/PP?PAGE=GUESTPAYFORM#/" target="_blank" rel="noopener noreferrer">Pay bill</a>
+            </Button>
           </div>
 
           <button
@@ -94,7 +88,10 @@ export const Nav = () => {
                   {item.label}
                 </Link>
               ))}
-              <Button asChild className="mt-3">
+              <Button asChild variant="ghost" className="mt-3">
+                <a href="https://quickurgentcare.webpay.md/PP?PAGE=GUESTPAYFORM#/" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>Pay bill</a>
+              </Button>
+              <Button asChild className="mt-1">
                 <Link href="/book" onClick={() => setOpen(false)}>Book a visit</Link>
               </Button>
             </div>

@@ -11,6 +11,7 @@ const PROVIDERS: Provider[] = [
     credentials: "PA-C",
     title: "Physician Assistant - Certified",
     description: "Brings warmth and precision to every visit, from sniffles to stitches.",
+    image: "/assets/IMG_10661.jpg",
   },
   {
     name: "Lisa McConnell",
