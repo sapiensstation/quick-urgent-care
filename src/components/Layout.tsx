@@ -31,7 +31,7 @@ export const Nav = () => {
           </div>
           <div className="flex items-center gap-4">
             <a href="tel:4052857222" className="flex items-center gap-2 hover:opacity-100 opacity-90 transition-opacity">
-              <Phone className="size-3" /> Moore: 405-285-7222
+              Moore: 405-285-7222
             </a>
             <a href="tel:4052862888" className="flex items-center gap-2 hover:opacity-100 opacity-90 transition-opacity">
               OKC: 405-286-2888
@@ -67,11 +67,11 @@ export const Nav = () => {
           </div>
 
           <button
-            className="lg:hidden p-2 rounded-lg hover:bg-surface-low"
+            className="lg:hidden p-1.5 rounded-lg hover:bg-surface-low"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            {open ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
         </div>
 
@@ -231,7 +231,7 @@ const StickyBar = () => {
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-outline-variant/20 bg-surface-bright/95 backdrop-blur">
         {open && (
           <div className="absolute bottom-full left-0 right-0 surface-lowest border-t border-outline-variant/20 shadow-press animate-fade-in">
-            <div className="px-4 py-2 text-xs uppercase tracking-[0.1em] text-on-surface-muted flex items-center justify-between">
+            <div className="px-2 py-1 text-xs uppercase tracking-[0.1em] text-on-surface-muted flex items-center justify-between">
               <span>Choose a clinic</span>
               <button onClick={() => setOpen(false)} aria-label="Close"><X className="size-4" /></button>
             </div>
@@ -239,14 +239,14 @@ const StickyBar = () => {
           </div>
         )}
         <div className="flex">
-          <a
+          {/* <a
             href="tel:4052857222"
             aria-label="Call 405-285-7222"
             className="flex-1 flex items-center justify-center gap-2 py-4 surface-lowest text-foreground font-medium text-sm border-r border-outline-variant/20"
           >
             <Phone className="size-4" />
             <span className="text-xs uppercase tracking-[0.1em]">Call</span>
-          </a>
+          </a> */}
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -264,7 +264,7 @@ const StickyBar = () => {
       <div className="hidden lg:block fixed bottom-6 right-6 z-40 surface-lowest rounded-xl lift-ambient p-5 w-80 border border-outline-variant/15">
         <div className="label-eyebrow text-on-surface-muted">Quick Urgent Care</div>
         <p className="mt-1 font-display font-semibold text-base leading-snug">Ready to book a visit?</p>
-        <a
+        {/* <a
           href="tel:4052857222"
           className="mt-4 flex items-center gap-3 w-full gradient-primary text-primary-foreground rounded-lg px-4 py-3 text-sm font-medium hover:-translate-y-0.5 transition-transform"
         >
@@ -273,8 +273,8 @@ const StickyBar = () => {
             <Phone className="size-3.5 relative" />
           </span>
           405-285-7222
-        </a>
-        <div className="mt-3 pt-3 border-t border-outline-variant/15">
+        </a> */}
+        <div className="mt-1 pt-1 border-t border-outline-variant/15">
           <ClinicActionList />
         </div>
       </div>
