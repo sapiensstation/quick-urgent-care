@@ -1,14 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
-import { ArrowUpRight, Activity, Stethoscope, Syringe, ScanLine, ShieldCheck, ClipboardList, Clock, MapPin, Star, ChevronLeft, ChevronRight } from "lucide-react";
-const heroClinic = "/assets/IMG_1307.jpeg";
-const clinicMoore = "/assets/IMG_1321.jpeg";
+import { ArrowUpRight, Activity, Stethoscope, Syringe, ScanLine, ShieldCheck, ClipboardList, MapPin, Star, ChevronLeft, ChevronRight } from "lucide-react";
+const heroClinic = "/assets/Moore_QUC_8191.jpeg";
+const clinicMoore = "/assets/Moore_QUC_8190.jpeg";
 const clinicOkc = "/assets/IMG_1320.jpeg";
-const imagingRoom = "/assets/IMG_1322.jpeg";
+const imagingRoom = "/assets/Moore_QUC_8189.jpeg";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { Layout } from "@/components/Layout";
 import { Eyebrow, SectionHeader, GeoChip } from "@/components/Editorial";
 
@@ -28,14 +26,6 @@ const CONDITIONS = [
   "Sinus infections", "Sore throat", "Sprains & strains", "UTIs",
 ];
 
-const PRICING = [
-  { service: "Self-pay urgent care visit", price: "89", note: "All-inclusive provider visit" },
-  { service: "Digital X-ray (per region)", price: "75", note: "Read on-site, in minutes" },
-  { service: "Rapid strep test", price: "35", note: "Results in 10 minutes" },
-  { service: "Sports / school physical", price: "45", note: "Form completed at visit" },
-  { service: "DOT physical", price: "85", note: "Certified medical examiner" },
-  { service: "COVID-19 PCR test", price: "95", note: "Results next business day" },
-];
 
 const REVIEWS = [
   { stars: 5, quote: "Absolutely love this place. Friendly, quick service, well organized. Top notch. Highly recommend.", author: "William F.", date: "Mar 2021" },
@@ -53,17 +43,8 @@ const REVIEWS = [
 ];
 
 const Index = () => {
-  const router = useRouter();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [bookToggle, setBookToggle] = useState(false);
-
-  const handleBookToggle = (checked: boolean) => {
-    setBookToggle(checked);
-    if (checked) {
-      setTimeout(() => router.push("/book"), 220);
-    }
-  };
 
   const advance = useCallback((dir: 1 | -1) => {
     setActive((p) => (p + dir + REVIEWS.length) % REVIEWS.length);
@@ -167,7 +148,7 @@ const Index = () => {
         />
 
         <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {SERVICES.map(({ icon: Icon, title, desc }, i) => (
+          {SERVICES.map(({ icon: Icon, title, desc }) => (
             <article
               key={title}
               className="group surface-lowest rounded-xl p-8 transition-all duration-300 ease-editorial hover:lift-soft hover:-translate-y-1"
