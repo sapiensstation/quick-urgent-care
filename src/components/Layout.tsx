@@ -67,11 +67,11 @@ export const Nav = () => {
           </div>
 
           <button
-            className="lg:hidden p-1.5 rounded-lg hover:bg-surface-low"
+            className="lg:hidden p-0.5 rounded hover:bg-surface-low"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
           >
-            {open ? <X className="size-4" /> : <Menu className="size-4" />}
+            {open ? <X className="size-3" /> : <Menu className="size-3" />}
           </button>
         </div>
 
@@ -169,7 +169,6 @@ const ClinicActionList = ({ onPick }: { onPick?: () => void }) => (
           <MapPin className="size-4 text-primary mt-0.5 shrink-0" />
           <div className="min-w-0 flex-1">
             <div className="text-sm font-medium leading-tight">{c.city}</div>
-            <div className="text-xs text-on-surface-muted mt-0.5 truncate">{c.fullAddress}</div>
           </div>
         </div>
         <div className="mt-3 flex gap-2">
