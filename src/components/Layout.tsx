@@ -261,7 +261,7 @@ const StickyBar = () => {
 
       {/* Desktop: floating card bottom-right */}
       <div className="hidden lg:block fixed bottom-6 right-6 z-40 surface-lowest rounded-xl lift-ambient p-5 w-80 border border-outline-variant/15">
-        <div className="label-eyebrow text-on-surface-muted">Quick Urgent Care</div>
+        {/* <div className="label-eyebrow text-on-surface-muted">Quick Urgent Care</div> */}
         <p className="mt-1 font-display font-semibold text-base leading-snug">Ready to book a visit?</p>
         {/* <a
           href="tel:4052857222"
