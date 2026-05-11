@@ -58,6 +58,28 @@ export const SEO_LANDINGS: SeoLanding[] = [
     clinic: moore,
   },
   {
+    slug: "physician-near-you-oklahoma-city",
+    metaTitle: "Physician Near You in Oklahoma City — Quick Urgent Care",
+    metaDescription:
+      "Board-certified physicians and providers near Oklahoma City. Walk in for same-day care, on-site X-ray and labs, and physicals — open daily 7am–8pm.",
+    h1: "Find a physician near you in Oklahoma City.",
+    intent: "urgent-care",
+    clinic: okc,
+    neighborhoods: [
+      "The Village",
+      "Nichols Hills",
+      "Edmond",
+      "Quail Creek",
+      "Memorial Road",
+      "Lake Hefner",
+    ],
+    longCopy: [
+      "Looking for a physician near you in Oklahoma City? Our walk-in clinic at 1421 NW 122nd St is staffed by board-certified providers who handle acute illness, minor injuries, occupational health, school and DOT physicals, vaccinations, and confidential lab testing — all under one roof.",
+      "We're a real alternative to waiting weeks for a primary-care appointment. Walk in any day from 7am to 8pm, including holidays, and most patients are seen and on their way in under an hour.",
+      "Our team specializes in evaluating broken bones, pneumonia, respiratory illness, allergic reactions, flu, simple fractures, lacerations, UTIs, and more — supported by same-visit digital X-ray and on-site rapid lab testing.",
+    ],
+  },
+  {
     slug: "walk-in-clinic-oklahoma-city-ok",
     metaTitle: "Walk-In Clinic in Oklahoma City — No Appointment Needed",
     metaDescription:

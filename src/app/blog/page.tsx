@@ -37,30 +37,55 @@ export default function Blog() {
         </p>
       </section>
 
+      <section className="container py-6">
+        <div className="flex flex-wrap gap-2">
+          {Array.from(new Set(BLOG_POSTS.map((p) => p.category))).map((cat) => (
+            <span
+              key={cat}
+              className="px-3 py-1.5 rounded-full surface-lowest text-xs font-medium border border-outline-variant/15 text-on-surface-variant"
+            >
+              {cat}
+            </span>
+          ))}
+        </div>
+      </section>
+
       <section className="container py-12">
         <div className="grid md:grid-cols-2 gap-6">
           {BLOG_POSTS.map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="surface-lowest rounded-xl p-8 hover:lift-soft transition-all group"
+              className="surface-lowest rounded-xl overflow-hidden hover:lift-soft transition-all group"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <span className="label-eyebrow">{post.category}</span>
-                <span className="text-on-surface-muted text-xs">·</span>
-                <span className="text-on-surface-muted text-xs">{post.readMinutes} min read</span>
-              </div>
-              <h2 className="font-display text-xl font-semibold leading-snug group-hover:text-primary transition-colors">
-                {post.title}
-              </h2>
-              <p className="mt-3 text-on-surface-variant text-sm leading-relaxed line-clamp-3">
-                {post.excerpt}
-              </p>
-              <div className="mt-5 flex items-center justify-between">
-                <span className="text-xs text-on-surface-muted">{formatDate(post.date)}</span>
-                <span className="inline-flex items-center gap-1 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                  Read more <ArrowUpRight className="size-3.5" />
-                </span>
+              {post.image && (
+                <div className="aspect-[16/9] overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-editorial group-hover:scale-105"
+                  />
+                </div>
+              )}
+              <div className="p-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="label-eyebrow">{post.category}</span>
+                  <span className="text-on-surface-muted text-xs">·</span>
+                  <span className="text-on-surface-muted text-xs">{post.readMinutes} min read</span>
+                </div>
+                <h2 className="font-display text-xl font-semibold leading-snug group-hover:text-primary transition-colors">
+                  {post.title}
+                </h2>
+                <p className="mt-3 text-on-surface-variant text-sm leading-relaxed line-clamp-3">
+                  {post.excerpt}
+                </p>
+                <div className="mt-5 flex items-center justify-between">
+                  <span className="text-xs text-on-surface-muted">{formatDate(post.date)}</span>
+                  <span className="inline-flex items-center gap-1 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                    Read more <ArrowUpRight className="size-3.5" />
+                  </span>
+                </div>
               </div>
             </Link>
           ))}

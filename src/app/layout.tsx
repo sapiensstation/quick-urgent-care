@@ -12,7 +12,12 @@ export const metadata: Metadata = {
   },
   description:
     "Walk-in & Urgent Care clinic in Moore and Oklahoma City. Open daily 7am–8pm including holidays. Board-certified providers, on-site X-ray, transparent pricing.",
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
   openGraph: {
     title: "Quick Urgent Care — Walk in & Urgent Care Clinic in Moore & OKC",
     description:

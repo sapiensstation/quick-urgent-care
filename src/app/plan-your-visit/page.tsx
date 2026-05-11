@@ -76,9 +76,14 @@ export default function PlanYourVisit() {
               <p className="mt-4 text-on-surface-variant leading-relaxed text-sm">
                 Don&apos;t see your plan? Call us — our billing team can verify your benefits before your visit.
               </p>
-              <Button asChild variant="ghost" className="mt-6">
-                <a href="tel:4052857222">Call to verify insurance</a>
-              </Button>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button asChild variant="ghost">
+                  <a href="tel:4052857222">Call to verify insurance</a>
+                </Button>
+                <Button asChild variant="ghost">
+                  <Link href="/insurance">Full insurance list <ArrowUpRight className="size-4" /></Link>
+                </Button>
+              </div>
             </div>
             <div className="lg:col-span-8">
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -106,8 +111,9 @@ export default function PlanYourVisit() {
           </div>
           <div className="lg:col-span-8 space-y-3">
             {[
-              { name: "Patient Intake Form", desc: "New patient registration and medical history", href: "/forms/patient-intake.pdf" },
-              { name: "Authorization for Release of Records", desc: "Request your medical records", href: "/forms/release-of-records.pdf" },
+              { name: "Patient Registration Form", desc: "New patient registration and medical history", href: "/forms/patient-registration.pdf" },
+              { name: "Release of Information Consent", desc: "Authorize release of your medical records", href: "/forms/release-of-information.pdf" },
+              { name: "Authorization to Treat a Minor", desc: "Required when a minor is not accompanied by a parent/guardian", href: "/forms/authorization-to-treat-minor.pdf" },
               { name: "Workers' Comp Authorization", desc: "Required for occupational injury visits", href: "/forms/workers-comp-authorization.pdf" },
             ].map((form) => (
               <a

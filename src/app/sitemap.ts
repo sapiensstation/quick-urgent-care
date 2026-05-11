@@ -18,6 +18,7 @@ const SEO_LANDING_SLUGS = [
   "urgent-care-oklahoma-city-ok",
   "walk-in-clinic-moore-ok",
   "walk-in-clinic-oklahoma-city-ok",
+  "physician-near-you-oklahoma-city",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -30,6 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "locations",
     "providers",
     "plan-your-visit",
+    "insurance",
     "careers",
     "covid",
     "blog",

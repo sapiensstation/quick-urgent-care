@@ -32,6 +32,9 @@ export async function generateMetadata(
       url: `${SITE_URL}/blog/${post.slug}`,
       type: "article",
       publishedTime: post.date,
+      authors: post.author ? [post.author] : undefined,
+      images: post.image ? [{ url: post.image }] : undefined,
+      tags: post.tags,
     },
   };
 }
@@ -120,11 +123,18 @@ export default async function BlogPost(
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
+    dateModified: post.date,
+    ...(post.author ? { author: { "@type": "Person", name: post.author } } : {}),
+    ...(post.image ? { image: [`${SITE_URL}${post.image}`] } : {}),
+    articleSection: post.category,
+    ...(post.tags ? { keywords: post.tags.join(", ") } : {}),
     publisher: {
       "@type": "Organization",
       name: "Quick Urgent Care",
       url: SITE_URL,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
     },
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${post.slug}` },
     url: `${SITE_URL}/blog/${post.slug}`,
   };
 
@@ -157,15 +167,39 @@ export default async function BlogPost(
           <ArrowLeft className="size-3.5" /> Back to blog
         </Link>
         <div className="max-w-3xl">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex flex-wrap items-center gap-3 mb-6">
             <Eyebrow tone="primary">{post.category}</Eyebrow>
             <span className="text-on-surface-muted text-xs">·</span>
             <span className="text-on-surface-muted text-xs">{post.readMinutes} min read</span>
             <span className="text-on-surface-muted text-xs">·</span>
             <span className="text-on-surface-muted text-xs">{formatDate(post.date)}</span>
+            {post.author && (
+              <>
+                <span className="text-on-surface-muted text-xs">·</span>
+                <span className="text-on-surface-muted text-xs">By {post.author}</span>
+              </>
+            )}
           </div>
           <h1 className="text-display-xl font-display leading-tight">{post.title}</h1>
           <p className="mt-6 text-lg text-on-surface-variant leading-relaxed">{post.excerpt}</p>
+          {post.image && (
+            <div className="mt-10 overflow-hidden rounded-xl lift-soft">
+              <img
+                src={post.image}
+                alt={post.title}
+                className="w-full aspect-[16/9] object-cover"
+              />
+            </div>
+          )}
+          {post.tags && post.tags.length > 0 && (
+            <div className="mt-8 flex flex-wrap gap-2">
+              {post.tags.map((t) => (
+                <span key={t} className="px-3 py-1.5 rounded-full surface-lowest text-xs font-medium border border-outline-variant/15">
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

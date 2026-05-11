@@ -20,7 +20,10 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Onsite Drug Testing Near Me: Saving Time, Money, and Resources",
     date: "2024-09-15",
     readMinutes: 5,
-    category: "Occupational Health",
+    category: "Drug Testing",
+    tags: ["Occupational Health", "Drug Testing", "Employers"],
+    author: "Quick Urgent Care Team",
+    image: "/assets/young-physician.jpg",
     excerpt:
       "Workplace drug testing doesn't have to mean lost hours. On-site testing at Quick Urgent Care puts results and compliance in one convenient visit.",
     body: `
@@ -60,7 +63,10 @@ Drug testing done right doesn't have to be complicated. Quick Urgent Care is her
     title: "Sore Throat and Ear Pain Relief: Walk-In Urgent Care",
     date: "2024-10-08",
     readMinutes: 4,
-    category: "Illness & Injury",
+    category: "Walk-In Urgent Care",
+    tags: ["Illness", "Pediatric", "Strep", "Ear Infection"],
+    author: "Quick Urgent Care Team",
+    image: "/assets/Moore_QUC_8190.jpeg",
     excerpt:
       "Strep throat and ear infections are two of the most common reasons patients visit urgent care. Here's what to expect at Quick Urgent Care.",
     body: `
@@ -97,7 +103,10 @@ For everything else, Quick Urgent Care has you covered. Walk in any day 7am–8p
     title: "Urgent Care STD Testing: What Patients Should Know",
     date: "2024-11-12",
     readMinutes: 5,
-    category: "Lab Testing",
+    category: "STD Testing",
+    tags: ["Lab Testing", "STD Testing", "Confidential Care"],
+    author: "Quick Urgent Care Team",
+    image: "/assets/Moore_QUC_8189.jpeg",
     excerpt:
       "Confidential STD testing at an urgent care clinic is more accessible than most people realize. Here's what you need to know before you come in.",
     body: `
@@ -144,7 +153,10 @@ Getting tested is an act of care for yourself and others. Quick Urgent Care offe
     title: "Why Walk-In Immunization Clinics Are Convenient for Families",
     date: "2025-01-20",
     readMinutes: 4,
-    category: "Preventive Care",
+    category: "Walk-In Immunization Clinic",
+    tags: ["Preventive Care", "Pediatric", "Vaccinations"],
+    author: "Quick Urgent Care Team",
+    image: "/assets/Moore_QUC_8191.jpeg",
     excerpt:
       "Skipping the appointment and walking in for vaccines is easier than most families realize. Here's why walk-in immunization clinics work.",
     body: `
