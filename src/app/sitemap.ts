@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { CLINICS, SITE_URL } from "@/lib/clinics";
+import { BLOG_POSTS } from "@/lib/blog-posts";
 
 const SERVICE_SLUGS = [
   "x-ray",
@@ -8,6 +9,8 @@ const SERVICE_SLUGS = [
   "physicals",
   "occupational-medicine",
   "lab-testing",
+  "treatments",
+  "pediatric",
 ];
 
 const SEO_LANDING_SLUGS = [
@@ -22,11 +25,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = [
     "",
     "about",
+    "contact",
     "services",
     "locations",
     "providers",
-    "pricing",
-    "pay",
+    "plan-your-visit",
+    "careers",
+    "covid",
+    "blog",
     "book",
   ].map((p) => ({
     url: `${SITE_URL}/${p}`.replace(/\/$/, "") || SITE_URL,
@@ -56,5 +62,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...base, ...services, ...landings, ...locations];
+  const blog = BLOG_POSTS.map((p) => ({
+    url: `${SITE_URL}/blog/${p.slug}`,
+    lastModified: new Date(p.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...base, ...services, ...landings, ...locations, ...blog];
 }

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
-    images: ["/og-image.jpg"],
+    images: ["/assets/young-physician.jpg"],
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },

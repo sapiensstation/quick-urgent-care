@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { ArrowUpRight, Activity, Stethoscope, Syringe, ScanLine, ShieldCheck, ClipboardList, MapPin, Star, ChevronLeft, ChevronRight } from "lucide-react";
-const heroClinic = "/assets/Moore_QUC_8191.jpeg";
+const heroClinic = "/assets/young-physician.jpg";
 const clinicMoore = "/assets/Moore_QUC_8190.jpeg";
 const clinicOkc = "/assets/IMG_1320.jpeg";
 const imagingRoom = "/assets/Moore_QUC_8189.jpeg";

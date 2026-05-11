@@ -7,6 +7,8 @@ export type SeoLanding = {
   h1: string;
   intent: "urgent-care" | "walk-in";
   clinic: Clinic;
+  neighborhoods?: string[];
+  longCopy?: string[];
 };
 
 const moore = CLINICS.find((c) => c.id === "moore")!;
@@ -30,6 +32,21 @@ export const SEO_LANDINGS: SeoLanding[] = [
     h1: "Urgent care in Oklahoma City, OK.",
     intent: "urgent-care",
     clinic: okc,
+    neighborhoods: [
+      "The Village",
+      "Nichols Hills",
+      "Edmond",
+      "Quail Creek",
+      "Britton",
+      "Lake Hefner",
+      "NW 122nd corridor",
+      "Memorial Road",
+    ],
+    longCopy: [
+      "Our Oklahoma City clinic sits just off NW 122nd St, minutes from The Village, Nichols Hills, Edmond, and the Memorial Road retail corridor. We see walk-in patients of every age — from 3 months and up — seven days a week, including holidays.",
+      "Same-day on-site digital X-ray and lab testing mean most diagnoses happen during your visit, not days later. Board-certified providers handle minor injuries, infections, occupational health, school and DOT physicals, and confidential STD testing under one roof.",
+      "If you're searching for urgent care near OKC, Edmond, or the Quail Creek and Lake Hefner neighborhoods, we're typically faster and far cheaper than a hospital ER for non-life-threatening visits.",
+    ],
   },
   {
     slug: "walk-in-clinic-moore-ok",
@@ -48,5 +65,20 @@ export const SEO_LANDINGS: SeoLanding[] = [
     h1: "Walk-in clinic in Oklahoma City, OK.",
     intent: "walk-in",
     clinic: okc,
+    neighborhoods: [
+      "The Village",
+      "Nichols Hills",
+      "Edmond",
+      "Quail Creek",
+      "Britton",
+      "Lake Hefner",
+      "NW 122nd corridor",
+      "Memorial Road",
+    ],
+    longCopy: [
+      "No appointment needed at our Oklahoma City walk-in clinic on NW 122nd St. We're open every day of the year, 7am to 8pm, including holidays — when most primary care offices and pediatricians are closed.",
+      "Walk in for cold and flu, strep, sinus and ear infections, sprains and fractures, lacerations, asthma flare-ups, UTIs, and rashes. On-site digital X-ray, EKG, and rapid lab testing keep visits short — most patients are in and out in under 45 minutes.",
+      "We accept Blue Cross Blue Shield, Aetna, UnitedHealthcare, Cigna, Humana, Medicare, SoonerCare, Tricare, and many local plans. Self-pay rates are posted, with no surprise facility fees.",
+    ],
   },
 ];

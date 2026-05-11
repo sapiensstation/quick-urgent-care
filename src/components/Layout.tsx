@@ -14,6 +14,7 @@ const NAV = [
   { to: "/providers", label: "Providers" },
   // { to: "/pricing", label: "Pricing" },
   { to: "/about", label: "About" },
+  // { to: "/contact", label: "Contact" },
 ];
 
 export const Nav = () => {
@@ -116,6 +117,30 @@ export const Footer = () => (
         <div className="mt-8 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-container text-secondary-on-container text-xs font-medium">
           <span className="size-1.5 rounded-full bg-secondary" />
           Open daily · 7 am – 8 pm
+        </div>
+        <div className="mt-6 flex items-center gap-3">
+          <a
+            href="https://www.facebook.com/quickurgentcareok"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Quick Urgent Care on Facebook"
+            className="size-9 rounded-full surface-lowest border border-outline-variant/20 grid place-items-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors"
+          >
+            <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden="true">
+              <path d="M13.5 9H15V6.5h-1.5c-1.93 0-3.5 1.57-3.5 3.5v1.5H8V14h2v6h2.5v-6H14.5l.5-2.5h-2.5V10c0-.55.45-1 1-1z" />
+            </svg>
+          </a>
+          <a
+            href="https://www.google.com/maps/place/Quick+Urgent+Care"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Quick Urgent Care on Google"
+            className="size-9 rounded-full surface-lowest border border-outline-variant/20 grid place-items-center text-on-surface-variant hover:text-primary hover:border-primary transition-colors"
+          >
+            <svg viewBox="0 0 24 24" className="size-4" fill="currentColor" aria-hidden="true">
+              <path d="M12 10.2v3.8h5.3c-.2 1.2-1.6 3.6-5.3 3.6-3.2 0-5.8-2.6-5.8-5.8s2.6-5.8 5.8-5.8c1.8 0 3 .8 3.7 1.4l2.5-2.4C16.6 3.6 14.5 2.8 12 2.8c-5.1 0-9.2 4.1-9.2 9.2s4.1 9.2 9.2 9.2c5.3 0 8.8-3.7 8.8-9 0-.6-.1-1.1-.2-1.6H12z" />
+            </svg>
+          </a>
         </div>
       </div>
 
