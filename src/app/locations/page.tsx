@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ArrowUpRight, MapPin, Phone, Clock } from "lucide-react";
 import { CLINICS } from "@/lib/clinics";
 const clinicMoore = "/assets/Moore_QUC_8191.jpeg";
-const clinicOkc = "/assets/IMG_1309.jpeg";
+const clinicOkc = "/assets/okc-exterior-front.jpg";
 
 const LOCATIONS = CLINICS.map((c) => ({
   img: c.id === "moore" ? clinicMoore : clinicOkc,

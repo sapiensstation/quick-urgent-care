@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { ArrowUpRight, Activity, Stethoscope, Syringe, ScanLine, ShieldCheck, ClipboardList, MapPin, Star, ChevronLeft, ChevronRight } from "lucide-react";
 const heroClinic = "/assets/young-physician.jpg";
 const clinicMoore = "/assets/Moore_QUC_8190.jpeg";
-const clinicOkc = "/assets/IMG_1320.jpeg";
+const clinicOkc = "/assets/okc-exterior-angle.jpg";
 const imagingRoom = "/assets/Moore_QUC_8189.jpeg";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/Layout";
