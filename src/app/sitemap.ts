@@ -19,6 +19,14 @@ const SEO_LANDING_SLUGS = [
   "walk-in-clinic-moore-ok",
   "walk-in-clinic-oklahoma-city-ok",
   "physician-near-you-oklahoma-city",
+  "dot-physical-moore-ok",
+  "dot-physical-oklahoma-city-ok",
+  "sports-physical-oklahoma-city-ok",
+  "flu-shot-oklahoma-city-ok",
+  "std-testing-oklahoma-city-ok",
+  "x-ray-near-me-oklahoma-city",
+  "pediatric-urgent-care-moore-ok",
+  "pediatric-urgent-care-oklahoma-city-ok",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -36,6 +44,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "covid",
     "blog",
     "book",
+    "employers",
+    "reviews",
+    "conditions",
   ].map((p) => ({
     url: `${SITE_URL}/${p}`.replace(/\/$/, "") || SITE_URL,
     lastModified: now,

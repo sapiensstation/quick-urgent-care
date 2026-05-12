@@ -83,10 +83,13 @@ const About = () => (
       </div>
       <div className="lg:col-span-7 space-y-6 text-lg text-on-surface-variant leading-relaxed">
         <p>
-          When you’re hurting, every minute feels like an hour. We get it. That’s why we’ve reimagined urgent care to be as compassionate as it is quick. Expert clinicians who actually listen, in a space designed to help you breathe easier.
+          When you&apos;re hurting, every minute feels like an hour. We get it. That&apos;s why we&apos;ve reimagined urgent care to be as compassionate as it is quick. Expert clinicians who actually listen, in a space designed to help you breathe easier.
         </p>
         <p>
           Our providers carry over 25 years of combined emergency and family medicine experience. They are committed to top-notch care: for you, your kids, and your team at work.
+        </p>
+        <p>
+          <strong className="text-foreground">Opened in April 2017</strong>, Quick Urgent Care was founded to give Moore and Oklahoma City families a real alternative to long ER waits and weeks-out primary-care bookings. We&apos;ve grown to two locally owned clinics, board-certified providers, and on-site digital X-ray and lab testing — without ever losing the small-clinic feel that started us.
         </p>
       </div>
     </section>

@@ -4,6 +4,7 @@ import { Eyebrow } from "@/components/Editorial";
 import { ProviderCard, type Provider } from "@/components/ProviderCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { SITE_URL } from "@/lib/clinics";
 
 const PROVIDERS: Provider[] = [
   {
@@ -57,8 +58,26 @@ const PROVIDERS: Provider[] = [
   },
 ];
 
+const providersJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": PROVIDERS.map((p) => ({
+    "@type": "Physician",
+    name: p.name,
+    honorificSuffix: p.credentials,
+    jobTitle: p.title,
+    description: p.description,
+    image: p.image ? `${SITE_URL}${p.image}` : undefined,
+    worksFor: { "@type": "MedicalOrganization", name: "Quick Urgent Care", url: SITE_URL },
+    medicalSpecialty: ["UrgentCare", "FamilyMedicine"],
+  })),
+};
+
 const Providers = () => (
   <Layout>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(providersJsonLd) }}
+    />
     <section className="container pt-20 lg:pt-28 pb-16 grid lg:grid-cols-12 gap-10 items-end">
       <div className="lg:col-span-8">
         <Eyebrow tone="primary">Providers</Eyebrow>

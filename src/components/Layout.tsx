@@ -144,19 +144,32 @@ export const Footer = () => (
         </div>
       </div>
 
-      <div className="lg:col-span-3">
+      <div className="lg:col-span-2">
         <div className="label-eyebrow mb-5">Visit</div>
         <ul className="space-y-3 text-sm">
           <li><Link href="/services" className="hover:text-primary transition-colors">Services</Link></li>
           <li><Link href="/locations" className="hover:text-primary transition-colors">Locations</Link></li>
           <li><Link href="/providers" className="hover:text-primary transition-colors">Providers</Link></li>
-          <li><Link href="/pricing" className="hover:text-primary transition-colors">Pricing</Link></li>
+          <li><Link href="/conditions" className="hover:text-primary transition-colors">Conditions A–Z</Link></li>
           <li><Link href="/about" className="hover:text-primary transition-colors">About</Link></li>
           <li><Link href="/book" className="hover:text-primary transition-colors">Book a visit</Link></li>
         </ul>
       </div>
 
-      <div className="lg:col-span-4">
+      <div className="lg:col-span-2">
+        <div className="label-eyebrow mb-5">Resources</div>
+        <ul className="space-y-3 text-sm">
+          <li><Link href="/plan-your-visit" className="hover:text-primary transition-colors">Plan your visit</Link></li>
+          <li><Link href="/insurance" className="hover:text-primary transition-colors">Insurance accepted</Link></li>
+          <li><Link href="/employers" className="hover:text-primary transition-colors">For employers</Link></li>
+          <li><Link href="/covid" className="hover:text-primary transition-colors">COVID-19</Link></li>
+          <li><Link href="/reviews" className="hover:text-primary transition-colors">Patient reviews</Link></li>
+          <li><Link href="/blog" className="hover:text-primary transition-colors">Blog</Link></li>
+          <li><Link href="/careers" className="hover:text-primary transition-colors">Careers</Link></li>
+        </ul>
+      </div>
+
+      <div className="lg:col-span-3">
         <div className="label-eyebrow mb-5">Contact</div>
         <ul className="space-y-3 text-sm">
           <li className="text-on-surface-variant">2212 N Broadway Ave, Moore, OK 73160</li>
@@ -164,6 +177,7 @@ export const Footer = () => (
           <li><a className="hover:text-primary" href="tel:4052857222">Moore: 405-285-7222</a></li>
           <li><a className="hover:text-primary" href="tel:4052862888">OKC: 405-286-2888</a></li>
           <li className="text-on-surface-variant">Fax 405-285-7227</li>
+          <li><Link href="/contact" className="hover:text-primary transition-colors">Send a message →</Link></li>
         </ul>
       </div>
     </div>

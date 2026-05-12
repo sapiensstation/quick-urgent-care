@@ -79,11 +79,22 @@ export default async function SeoLandingPage(
           <Eyebrow tone="primary">{c.city}, {c.state}</Eyebrow>
           <h1 className="mt-5 text-display-xl font-display">{lp.h1}</h1>
         </div>
-        <p className="lg:col-span-4 text-on-surface-variant text-lg leading-relaxed">
-          {lp.intent === "walk-in"
-            ? `No appointment needed. Walk in any day 7am–8pm including holidays at ${c.fullAddress}.`
-            : `Board-certified urgent care at ${c.fullAddress}. On-site X-ray, transparent pricing, most insurance accepted.`}
-        </p>
+        <div className="lg:col-span-4 space-y-4">
+          <p className="text-on-surface-variant text-lg leading-relaxed">
+            {lp.intent === "walk-in"
+              ? `No appointment needed. Walk in any day 7am–8pm including holidays at ${c.fullAddress}.`
+              : lp.intent === "service"
+                ? `Walk in for ${lp.h1.replace(/\.$/, "").toLowerCase()} at ${c.fullAddress}. Open daily 7am–8pm including holidays.`
+                : `Board-certified urgent care at ${c.fullAddress}. On-site X-ray, transparent pricing, most insurance accepted.`}
+          </p>
+          {lp.serviceFocus && (
+            <Button asChild variant="ghost">
+              <Link href={`/services/${lp.serviceFocus}`}>
+                Service details <ArrowUpRight className="size-4" />
+              </Link>
+            </Button>
+          )}
+        </div>
       </section>
 
       <section className="container">
