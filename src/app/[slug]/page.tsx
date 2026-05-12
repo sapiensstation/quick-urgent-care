@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, MapPin, Phone, Clock, Stethoscope } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Eyebrow } from "@/components/Editorial";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { SEO_LANDINGS } from "@/lib/seo-landings";
 import { SITE_URL } from "@/lib/clinics";
@@ -66,7 +67,14 @@ export default async function SeoLandingPage(
     <Layout>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBizJsonLd) }} />
 
-      <section className="container pt-20 lg:pt-28 pb-12 grid lg:grid-cols-12 gap-10 items-end">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: lp.h1.replace(/\.$/, "") },
+        ]}
+      />
+
+      <section className="container pt-12 lg:pt-16 pb-12 grid lg:grid-cols-12 gap-10 items-end">
         <div className="lg:col-span-8">
           <Eyebrow tone="primary">{c.city}, {c.state}</Eyebrow>
           <h1 className="mt-5 text-display-xl font-display">{lp.h1}</h1>
@@ -130,6 +138,32 @@ export default async function SeoLandingPage(
           </div>
         </div>
       </section>
+
+      {(lp.longCopy?.length || lp.neighborhoods?.length) && (
+        <section className="surface-low">
+          <div className="container py-16 lg:py-20 grid lg:grid-cols-12 gap-10">
+            <div className="lg:col-span-7 space-y-5">
+              <Eyebrow>About this clinic</Eyebrow>
+              <h2 className="font-display text-display-md">{c.city}, {c.state} — built around walk-in care.</h2>
+              {lp.longCopy?.map((p, i) => (
+                <p key={i} className="text-on-surface-variant leading-relaxed">{p}</p>
+              ))}
+            </div>
+            {lp.neighborhoods?.length ? (
+              <div className="lg:col-span-5">
+                <Eyebrow>Neighborhoods we serve</Eyebrow>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {lp.neighborhoods.map((n) => (
+                    <span key={n} className="px-3 py-1.5 rounded-full surface-lowest text-sm border border-outline-variant/15">
+                      {n}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </section>
+      )}
 
       <section className="container py-16">
         <div className="rounded-xl gradient-primary text-primary-foreground p-12 lg:p-16 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">

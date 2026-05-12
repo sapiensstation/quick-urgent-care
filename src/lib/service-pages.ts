@@ -118,6 +118,48 @@ export const SERVICE_PAGES: ServicePage[] = [
     ],
   },
   {
+    slug: "treatments",
+    title: "Treatments",
+    metaTitle: "Urgent Care Treatments — Moore & OKC",
+    metaDescription:
+      "Comprehensive treatment services at Quick Urgent Care. Acute illness, minor injuries, infections, wound care, and more. Walk in 7am–8pm daily.",
+    eyebrow: "Clinical Care",
+    hero: "Treatment services built for urgent needs.",
+    intro:
+      "From acute illnesses and minor injuries to infections and wound care, our board-certified team delivers individualized treatment plans in one visit.",
+    highlights: [
+      { title: "Acute & chronic conditions", desc: "Flu, strep, UTIs, rashes, asthma, migraines — same-day evaluation and treatment." },
+      { title: "Minor procedures", desc: "Sutures, staple removal, abscess drainage, foreign body removal, splinting." },
+      { title: "Prescriptions on-site", desc: "Medications sent electronically to your pharmacy before you leave." },
+    ],
+    faqs: [
+      { q: "What conditions do you treat?", a: "We treat most non-life-threatening conditions — from the flu and ear infections to lacerations, sprains, and UTIs. Call if you're unsure." },
+      { q: "Can you refill my prescriptions?", a: "We can prescribe medications related to your visit. For ongoing prescription management, we'll recommend following up with your PCP." },
+      { q: "What if I need follow-up care?", a: "Our providers issue referrals and coordinate follow-up with specialists or your primary care physician as needed." },
+    ],
+  },
+  {
+    slug: "pediatric",
+    title: "Pediatric Urgent Care",
+    metaTitle: "Pediatric Urgent Care — Moore & OKC",
+    metaDescription:
+      "Gentle, family-first urgent care for children 3 months and up at Quick Urgent Care in Moore and Oklahoma City. Walk in 7am–8pm.",
+    eyebrow: "Pediatric",
+    hero: "Gentle urgent care for kids.",
+    intro:
+      "We see children 3 months and up for illness, injury, physicals, and vaccinations. Our team is trained to make every visit as calm and fast as possible for little patients and their families.",
+    highlights: [
+      { title: "Ages 3 months and up", desc: "We treat infants, toddlers, school-age children, and teens for a wide range of conditions." },
+      { title: "No pediatric surcharge", desc: "Same transparent pricing as adult visits. No surprise fees." },
+      { title: "Family visits welcome", desc: "Multiple family members can be seen in the same visit — no extra appointments needed." },
+    ],
+    faqs: [
+      { q: "What age do you see children?", a: "We treat children 3 months and up at both our Moore and Oklahoma City locations." },
+      { q: "Can my child get a sports physical and vaccines in one visit?", a: "Yes. Bring your school or sports form and immunization record — we'll handle both in one trip." },
+      { q: "When should I take my child to the ER instead?", a: "Go to the ER for severe difficulty breathing, seizures, loss of consciousness, or severe allergic reactions. For everything else, we can help." },
+    ],
+  },
+  {
     slug: "lab-testing",
     title: "Lab Testing",
     metaTitle: "Lab Testing & STD Panels — Moore & OKC",

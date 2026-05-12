@@ -81,7 +81,7 @@ const Pricing = () => (
           <div className="label-eyebrow text-primary-foreground/70">Quick Urgent Care visit</div>
           <div className="mt-6 flex items-baseline gap-2">
             <span className="font-display text-display-lg font-semibold tracking-tight">$89</span>
-            <span className="text-primary-foreground/80 text-sm">self-pay, all-inclusive</span>
+            <span className="text-primary-foreground/80 text-sm">self-pay</span>
           </div>
           <ul className="mt-8 space-y-3 text-sm">
             <li className="flex items-start gap-3"><span className="mt-1.5 size-1.5 rounded-full bg-primary-foreground" /><span>~15 min average door-to-doctor</span></li>

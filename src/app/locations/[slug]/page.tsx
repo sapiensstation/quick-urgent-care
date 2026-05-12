@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, MapPin, Phone, Clock } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Eyebrow } from "@/components/Editorial";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { CLINICS, SITE_URL } from "@/lib/clinics";
 
@@ -63,7 +64,15 @@ export default async function ClinicPage(
     <Layout>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <section className="container pt-20 lg:pt-28 pb-12 grid lg:grid-cols-12 gap-10 items-end">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Locations", href: "/locations" },
+          { label: c.city },
+        ]}
+      />
+
+      <section className="container pt-12 lg:pt-16 pb-12 grid lg:grid-cols-12 gap-10 items-end">
         <div className="lg:col-span-8">
           <Eyebrow tone="primary">{c.city}, {c.state}</Eyebrow>
           <h1 className="mt-5 text-display-xl font-display">Quick Urgent Care — {c.city}.</h1>

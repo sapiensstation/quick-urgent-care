@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, Check, MapPin, Clock } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Eyebrow } from "@/components/Editorial";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { SERVICE_PAGES } from "@/lib/service-pages";
 import { CLINICS, SITE_URL } from "@/lib/clinics";
@@ -58,12 +59,22 @@ export default async function ServiceDetail(
     },
   };
 
+  const related = SERVICE_PAGES.filter((s) => s.slug !== svc.slug).slice(0, 3);
+
   return (
     <Layout>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
 
-      <section className="container pt-20 lg:pt-28 pb-12 grid lg:grid-cols-12 gap-10 items-end">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Services", href: "/services" },
+          { label: svc.title },
+        ]}
+      />
+
+      <section className="container pt-12 lg:pt-16 pb-12 grid lg:grid-cols-12 gap-10 items-end">
         <div className="lg:col-span-8">
           <Eyebrow tone="primary">{svc.eyebrow}</Eyebrow>
           <h1 className="mt-5 text-display-xl font-display">{svc.hero}</h1>
@@ -120,6 +131,41 @@ export default async function ServiceDetail(
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      <section className="container py-16">
+        <Eyebrow>Related services</Eyebrow>
+        <h2 className="mt-3 font-display text-display-md">Also offered at our clinics.</h2>
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {related.map((r) => (
+            <Link
+              key={r.slug}
+              href={`/services/${r.slug}`}
+              className="surface-lowest rounded-xl p-6 hover:lift-soft transition-all group"
+            >
+              <Eyebrow>{r.eyebrow}</Eyebrow>
+              <h3 className="mt-3 font-display text-lg font-semibold">{r.title}</h3>
+              <p className="mt-2 text-on-surface-variant text-sm leading-relaxed line-clamp-2">{r.metaDescription}</p>
+              <span className="mt-4 inline-flex items-center gap-1 text-sm text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+                Learn more <ArrowUpRight className="size-3.5" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="container pb-16">
+        <div className="surface-lowest rounded-xl p-6 lg:p-8 border-l-4 border-destructive/60 flex items-start gap-4">
+          <div className="size-9 rounded-full bg-destructive/10 grid place-items-center text-destructive shrink-0">
+            <span className="font-bold text-base">!</span>
+          </div>
+          <div>
+            <div className="font-medium">For life-threatening emergencies, call 911 or go to the nearest ER.</div>
+            <p className="mt-1 text-sm text-on-surface-variant leading-relaxed">
+              Chest pain, severe difficulty breathing, stroke symptoms, heavy bleeding, or loss of consciousness should be evaluated at an emergency room — not urgent care.
+            </p>
+          </div>
         </div>
       </section>
 

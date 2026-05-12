@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import { ArrowUpRight, Activity, Stethoscope, Syringe, ScanLine, ShieldCheck, ClipboardList, MapPin, Star, ChevronLeft, ChevronRight } from "lucide-react";
-const heroClinic = "/assets/Moore_QUC_8191.jpeg";
+const heroClinic = "/assets/young-physician.jpg";
 const clinicMoore = "/assets/Moore_QUC_8190.jpeg";
 const clinicOkc = "/assets/IMG_1320.jpeg";
 const imagingRoom = "/assets/Moore_QUC_8189.jpeg";
@@ -228,7 +228,7 @@ const Index = () => {
             <div className="label-eyebrow text-primary-foreground/70">Quick Urgent Care visit</div>
             <div className="mt-6 flex items-baseline gap-2">
               <span className="font-display text-display-lg font-semibold tracking-tight">$89</span>
-              <span className="text-primary-foreground/80 text-sm">self-pay, all-inclusive</span>
+              <span className="text-primary-foreground/80 text-sm">self-pay</span>
             </div>
             <ul className="mt-8 space-y-3 text-sm">
               <li className="flex items-start gap-3"><span className="mt-1.5 size-1.5 rounded-full bg-primary-foreground" /><span>~15 min average door-to-doctor</span></li>
@@ -369,7 +369,7 @@ const Index = () => {
             { q: "What insurance do you accept?", a: "Most major commercial plans, Medicare, Medicaid (SoonerCare), Tricare, and self-pay. Call to verify your specific plan." },
             { q: "Are you open on holidays?", a: "Yes. Open every single day, 7am–8pm — including holidays." },
             { q: "How fast is the wait?", a: "Average door-to-doctor is around 15 minutes. Live wait times shown on the homepage." },
-            { q: "Do you treat children?", a: "Yes. We see kids 6 months and up in a pediatric-friendly setting." },
+            { q: "Do you treat children?", a: "Yes. We see kids 3 months and up in a pediatric-friendly setting." },
             { q: "Can I get an X-ray same visit?", a: "Yes. We have on-site digital X-ray and ultrasound, read by our providers in real time." },
           ].map((f) => (
             <details key={f.q} className="group surface-lowest rounded-xl p-6">
@@ -392,7 +392,7 @@ const Index = () => {
                 { q: "What insurance do you accept?", a: "Most major commercial plans, Medicare, Medicaid (SoonerCare), Tricare, and self-pay. Call to verify your specific plan." },
                 { q: "Are you open on holidays?", a: "Yes. Open every single day, 7am–8pm — including holidays." },
                 { q: "How fast is the wait?", a: "Average door-to-doctor is around 15 minutes. Live wait times shown on the homepage." },
-                { q: "Do you treat children?", a: "Yes. We see kids 6 months and up in a pediatric-friendly setting." },
+                { q: "Do you treat children?", a: "Yes. We see kids 3 months and up in a pediatric-friendly setting." },
                 { q: "Can I get an X-ray same visit?", a: "Yes. We have on-site digital X-ray and ultrasound, read by our providers in real time." },
               ].map((f) => ({
                 "@type": "Question",

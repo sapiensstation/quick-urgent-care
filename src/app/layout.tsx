@@ -12,7 +12,12 @@ export const metadata: Metadata = {
   },
   description:
     "Walk-in & Urgent Care clinic in Moore and Oklahoma City. Open daily 7am–8pm including holidays. Board-certified providers, on-site X-ray, transparent pricing.",
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
   openGraph: {
     title: "Quick Urgent Care — Walk in & Urgent Care Clinic in Moore & OKC",
     description:
@@ -20,7 +25,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
-    images: ["/og-image.jpg"],
+    images: ["/assets/young-physician.jpg"],
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
