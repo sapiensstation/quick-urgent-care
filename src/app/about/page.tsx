@@ -12,8 +12,8 @@ const GALLERY = [
     className: "md:col-span-2 md:row-span-2",
   },
   {
-    src: "/assets/IMG_1309.jpeg",
-    alt: "Clinic exterior",
+    src: "/assets/okc-exterior-front.jpg",
+    alt: "Oklahoma City clinic exterior",
     className: "md:col-span-2",
   },
   {
@@ -32,13 +32,13 @@ const GALLERY = [
     className: "md:col-span-2",
   },
   {
-    src: "/assets/IMG_1320.jpeg",
-    alt: "Quick Urgent Care",
+    src: "/assets/okc-reception.jpg",
+    alt: "Oklahoma City clinic reception",
     className: "md:col-span-2",
   },
   {
-    src: "/assets/IMG_1321.jpeg",
-    alt: "Clinic view",
+    src: "/assets/okc-signage.jpg",
+    alt: "Oklahoma City clinic signage",
     className: "",
   },
   {
@@ -47,8 +47,8 @@ const GALLERY = [
     className: "md:col-span-2",
   },
   {
-    src: "/assets/IMG_1329.jpeg",
-    alt: "Clinic facilities",
+    src: "/assets/okc-front-desk.jpg",
+    alt: "Oklahoma City clinic front desk",
     className: "",
   },
   {
